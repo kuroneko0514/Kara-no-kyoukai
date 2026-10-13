@@ -1,0 +1,2307 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    /* 引入文鼎体网络字体 */
+    @font-face {
+      font-family: 'WenDing';
+      src: url('https://files.catbox.moe/6i7ujh.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    /* 全局与重置样式：彻底禁用伪粗体并统一字重 */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: "WenDing", "Yu Mincho", "Hiragino Mincho ProN", "Songti SC", "Source Han Serif SC", "Microsoft YaHei", serif;
+      font-weight: normal;
+      font-synthesis: none;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    body {
+      background: transparent;
+      color: #2b2b2e;
+      padding: 8px;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    /* 主容器：讲谈社文库典雅装帧风格 */
+    .kknj-container {
+      width: 100%;
+      background: #fbfaf8;
+      border: 1px solid #d4cfc9;
+      border-radius: 4px;
+      box-shadow: 0 4px 18px rgba(30, 25, 35, 0.08), inset 0 0 30px rgba(165, 154, 202, 0.06);
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* 顶部文库书脊分栏色块 */
+    .spine-header-strip {
+      background: #ffffff;
+      padding: 8px 14px;
+      border-bottom: 2px solid #a59aca;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .spine-brand {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .spine-logo {
+      font-size: 11px;
+      color: #4a4459;
+      border: 1px solid #4a4459;
+      border-radius: 50%;
+      width: 18px;
+      height: 18px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      line-height: 1;
+    }
+
+    .spine-title-main {
+      font-size: 13px;
+      letter-spacing: 2px;
+      color: #1a1820;
+    }
+
+    .spine-mark {
+      font-size: 11px;
+      color: #7b7389;
+      font-family: monospace;
+      letter-spacing: 1px;
+    }
+
+    /* 世界时间顶部通栏指示 */
+    .world-header-bar {
+      padding: 8px 14px;
+      background: linear-gradient(180deg, #f2eff7 0%, #faf8fc 100%);
+      border-bottom: 1px solid #e3deeb;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .time-title {
+      font-size: 10px;
+      color: #837b91;
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+    }
+
+    .time-val {
+      font-size: 12px;
+      color: #383244;
+      font-family: "Courier New", monospace;
+    }
+
+    /* PC 端双栏核心网格布局 */
+    .main-columns-layout {
+      display: grid;
+      grid-template-columns: 1fr 1.35fr;
+      gap: 12px;
+      padding: 12px 14px;
+      background: #fbfaf8;
+      align-items: start;
+      transition: grid-template-columns 0.25s ease;
+    }
+
+    /* 当左侧海报栏折叠时，右侧自适应撑满 */
+    .main-columns-layout.left-collapsed {
+      grid-template-columns: 1fr;
+    }
+
+    /* 移动端与窄屏响应式回退为单栏 */
+    @media (max-width: 640px) {
+      .main-columns-layout {
+        grid-template-columns: 1fr !important;
+        gap: 10px;
+        padding: 10px;
+      }
+    }
+
+    /* 左侧栏：篇章与海报 */
+    .left-column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      transition: opacity 0.2s ease;
+    }
+
+    .main-columns-layout.left-collapsed .left-column {
+      display: none;
+    }
+
+    .chapter-badge-box {
+      background: #ffffff;
+      border: 1px solid #dfd9e8;
+      padding: 8px 10px;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    .badge-text-group {
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+    }
+
+    .meta-label {
+      font-size: 10px;
+      color: #8c8599;
+      margin-bottom: 2px;
+    }
+
+    .meta-value {
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      color: #58447d;
+    }
+
+    /* 折叠左侧海报栏的按钮 */
+    .btn-collapse-left {
+      background: #f6f3f9;
+      border: 1px solid #ded6e6;
+      border-radius: 3px;
+      color: #69568d;
+      font-size: 11px;
+      padding: 4px 8px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      user-select: none;
+      transition: all 0.2s ease;
+      line-height: 1;
+    }
+
+    .btn-collapse-left:hover {
+      background: #69568d;
+      color: #ffffff;
+      border-color: #69568d;
+    }
+
+    .btn-collapse-left:hover svg {
+      fill: #ffffff;
+    }
+
+    /* 展开左侧海报栏的浮标 */
+    .btn-expand-left {
+      display: none;
+      background: #ffffff;
+      border: 1px solid #ded6e6;
+      border-radius: 3px;
+      color: #69568d;
+      font-size: 11px;
+      padding: 5px 10px;
+      margin-bottom: 8px;
+      cursor: pointer;
+      align-items: center;
+      gap: 6px;
+      width: fit-content;
+      user-select: none;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      transition: all 0.2s ease;
+    }
+
+    .btn-expand-left:hover {
+      background: #f6f3f9;
+      border-color: #a59aca;
+      color: #58447d;
+    }
+
+    .btn-expand-left:hover svg {
+      fill: #58447d;
+    }
+
+    .main-columns-layout.left-collapsed .btn-expand-left {
+      display: inline-flex;
+    }
+
+    /* 按钮内的矢量图标统一样式 */
+    .ui-icon-svg {
+      width: 9px;
+      height: 9px;
+      fill: #69568d;
+      display: inline-block;
+      vertical-align: middle;
+      flex-shrink: 0;
+      transition: fill 0.2s ease;
+    }
+
+    /* 篇章海报卡片 */
+    .poster-box {
+      background: #ffffff;
+      border: 1px solid #dfd9e8;
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 3 / 4;
+    }
+
+    .poster-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .poster-fallback {
+      font-size: 11px;
+      color: #8c839b;
+      letter-spacing: 0.5px;
+      text-align: center;
+      padding: 12px;
+    }
+
+    /* 右侧栏：音乐播放器与人物列表 */
+    .right-column {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      min-width: 0;
+    }
+
+    /* 纯视觉黑胶唱机与控制板块 */
+    .player-card {
+      padding: 10px 12px;
+      background: #ffffff;
+      border: 1px solid #ded9e5;
+      border-radius: 3px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+    }
+
+    /* 黑胶唱片本体容器 */
+    .vinyl-box {
+      width: 46px;
+      height: 46px;
+      flex-shrink: 0;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .vinyl-disc {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      background: radial-gradient(circle, #2b2830 0%, #151318 45%, #2b2830 50%, #111014 70%, #222026 100%);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25), inset 0 0 4px rgba(255, 255, 255, 0.2);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: rotateVinyl 8s linear infinite;
+      animation-play-state: paused;
+      border: 1px solid #383440;
+    }
+
+    .vinyl-disc.playing {
+      animation-play-state: running;
+    }
+
+    @keyframes rotateVinyl {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    /* 唱片中心封面 */
+    .vinyl-cover {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: #8c7ea8;
+      background-size: cover;
+      background-position: center;
+      box-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .vinyl-center-hole {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: #fbfaf8;
+      box-shadow: inset 0 0 2px rgba(0, 0, 0, 0.8);
+    }
+
+    /* 播放控制包裹区 */
+    .player-track-wrap {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      min-width: 0;
+    }
+
+    .progress-bar-bg {
+      width: 100%;
+      height: 5px;
+      background: #eeeaf2;
+      border-radius: 3px;
+      position: relative;
+      cursor: pointer;
+      overflow: hidden;
+      border: 1px solid #ded6e6;
+    }
+
+    .progress-bar-fill {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #8c7ea8 0%, #69568d 100%);
+      border-radius: 2px;
+      transition: width 0.15s linear;
+    }
+
+    .player-action-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .action-left-group {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 0;
+      flex: 1;
+    }
+
+    /* 播放/暂停按钮 */
+    .btn-play-icon {
+      background: none;
+      border: none;
+      cursor: pointer;
+      line-height: 1;
+      padding: 0;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 16px;
+      height: 16px;
+      flex-shrink: 0;
+      transition: transform 0.1s ease;
+      user-select: none;
+    }
+
+    .btn-play-icon svg {
+      width: 12px;
+      height: 12px;
+      fill: #69568d;
+      transition: fill 0.2s ease;
+    }
+
+    .btn-play-icon:hover {
+      transform: scale(1.15);
+    }
+
+    .btn-play-icon:hover svg {
+      fill: #9c4d5d;
+    }
+
+    /* 篇章随动文字：最多两行，自动折行与溢出省略 */
+    .chapter-subtext {
+      font-size: 11px;
+      color: #6b6378;
+      letter-spacing: 0.3px;
+      line-height: 1.25;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      word-break: break-all;
+      white-space: normal;
+      user-select: none;
+      max-height: 2.5em;
+      transition: font-size 0.2s ease;
+    }
+
+    /* 音量调节条 */
+    .volume-ctrl-group {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex-shrink: 0;
+    }
+
+    .volume-icon {
+      font-size: 11px;
+      color: #8c839b;
+      font-family: -apple-system, BlinkMacSystemFont, sans-serif !important;
+      line-height: 1;
+      user-select: none;
+    }
+
+    .volume-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 44px;
+      height: 4px;
+      background: #e8e2ee;
+      border-radius: 2px;
+      outline: none;
+      cursor: pointer;
+      transition: background 0.2s ease;
+    }
+
+    .volume-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #8c7ea8;
+      cursor: pointer;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    .volume-slider::-moz-range-thumb {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #8c7ea8;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+    }
+
+    /* 出场人物列表板块 */
+    .characters-section {
+      background: transparent;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .section-title {
+      font-size: 12px;
+      color: #3b3546;
+      letter-spacing: 1px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-left: 3px solid #8c7ea8;
+      padding-left: 6px;
+      margin-bottom: 2px;
+    }
+
+    .char-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    /* 角色卡项 */
+    .char-card {
+      background: #ffffff;
+      border: 1px solid #ded9e5;
+      border-radius: 3px;
+      overflow: hidden;
+      box-shadow: 0 1px 4px rgba(0, 0, 0, 0.03);
+      transition: border-color 0.2s ease;
+    }
+
+    .char-card:hover {
+      border-color: #a59aca;
+    }
+
+    /* 角色卡头部 */
+    .char-header {
+      padding: 8px 10px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      cursor: pointer;
+      user-select: none;
+      background: #ffffff;
+    }
+
+    .char-avatar-box {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      border: 1.5px solid #a59aca;
+      overflow: hidden;
+      flex-shrink: 0;
+      background: #f0ecf6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    }
+
+    .char-avatar-img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .char-avatar-fallback {
+      font-size: 16px;
+      color: #5c4f75;
+    }
+
+    .char-basic-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .char-name-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .char-name {
+      font-size: 13.5px;
+      color: #1e1b24;
+      letter-spacing: 0.5px;
+    }
+
+    .char-fav-text {
+      font-size: 11px;
+      color: #9c4d5d;
+      font-family: "Courier New", monospace;
+    }
+
+    .char-toggle-icon {
+      font-size: 10px;
+      color: #9c94aa;
+      transition: transform 0.2s ease;
+    }
+
+    .char-card.open .char-toggle-icon {
+      transform: rotate(180deg);
+      color: #69568d;
+    }
+
+    /* 角色折叠展开内容 */
+    .char-details {
+      display: none;
+      padding: 10px 12px;
+      border-top: 1px solid #eeeaf2;
+      background: #faf8fc;
+    }
+
+    .char-card.open .char-details {
+      display: block;
+    }
+
+    /* 角色细节条目 */
+    .detail-item {
+      margin-bottom: 8px;
+    }
+
+    .detail-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .detail-label {
+      font-size: 10px;
+      color: #807790;
+      margin-bottom: 2px;
+    }
+
+    .detail-content {
+      font-size: 12px;
+      color: #332e3d;
+      line-height: 1.5;
+      background: #ffffff;
+      padding: 6px 9px;
+      border-left: 2px solid #8c7ea8;
+      border-radius: 0 2px 2px 0;
+      border-top: 1px solid #f0ecf5;
+      border-right: 1px solid #f0ecf5;
+      border-bottom: 1px solid #f0ecf5;
+    }
+
+    .heart-voice {
+      color: #52416f;
+      font-style: italic;
+    }
+
+    /* 立绘展示区容器：全图展示 + 渐隐渐出过渡动画 */
+    .portrait-gallery-wrap {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+    }
+
+    .portrait-box {
+      width: 100%;
+      background: #18151c;
+      border: 1px solid #ded6e6;
+      border-radius: 3px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: border-color 0.2s ease, box-shadow 0.2s ease;
+      min-height: 180px;
+    }
+
+    .portrait-box:hover {
+      border-color: #a59aca;
+      box-shadow: 0 2px 8px rgba(105, 86, 141, 0.16);
+    }
+
+    .portrait-img {
+      width: 100%;
+      height: auto;
+      max-height: 480px;
+      object-fit: contain;
+      display: block;
+      user-select: none;
+      opacity: 1;
+      transition: opacity 0.25s ease-in-out;
+    }
+
+    .portrait-img.fading-out {
+      opacity: 0;
+    }
+
+    .portrait-empty {
+      font-size: 11px;
+      color: #8c839b;
+      letter-spacing: 0.5px;
+      padding: 24px 0;
+    }
+
+    .empty-placeholder {
+      text-align: center;
+      padding: 16px 0;
+      color: #8b8398;
+      font-size: 12px;
+    }
+  </style>
+  <script type="module">
+    /* 篇章海报图映射表 */
+    const CHAPTER_POSTERS = {
+      '杀人考察前': 'https://files.catbox.moe/pih7ha.webp',
+      '迦蓝之洞': 'https://files.catbox.moe/oin29p.webp',
+      '伽蓝之洞': 'https://files.catbox.moe/oin29p.webp',
+      '未来福音': 'https://files.catbox.moe/f75g1t.webp',
+      '痛觉残留': 'https://files.catbox.moe/zieovq.webp',
+      '俯瞰风景': 'https://files.catbox.moe/wci2lm.webp',
+      '矛盾螺旋': 'https://files.catbox.moe/hqfe6w.webp',
+      '忘却录音': 'https://files.catbox.moe/nsbppm.webp',
+      '杀人考察后': 'https://files.catbox.moe/4m25qi.webp',
+      '日常': 'https://files.catbox.moe/4602j9.webp'
+    };
+
+    /* 篇章与唱片封面映射表 */
+    const CHAPTER_COVERS = {
+      '杀人考察前': 'https://files.catbox.moe/d89r25.jpg',
+      '迦蓝之洞': 'https://files.catbox.moe/2wdkdt.jpg',
+      '伽蓝之洞': 'https://files.catbox.moe/2wdkdt.jpg',
+      '未来福音': 'https://files.catbox.moe/ui3tkh.jpg',
+      '痛觉残留': 'https://files.catbox.moe/bcyvd7.jpg',
+      '俯瞰风景': 'https://files.catbox.moe/19ldcv.jpg',
+      '矛盾螺旋': 'https://files.catbox.moe/qgkgaw.jpg',
+      '忘却录音': 'https://files.catbox.moe/wt23o5.jpg',
+      '杀人考察后': 'https://files.catbox.moe/kisqz6.jpg',
+      '杀人考察': 'https://files.catbox.moe/d89r25.jpg'
+    };
+
+    /* 用于“日常”篇章时随机抽取的非日常专辑封面池 */
+    const OTHER_CHAPTER_COVER_URLS = [
+      'https://files.catbox.moe/d89r25.jpg',
+      'https://files.catbox.moe/2wdkdt.jpg',
+      'https://files.catbox.moe/ui3tkh.jpg',
+      'https://files.catbox.moe/bcyvd7.jpg',
+      'https://files.catbox.moe/19ldcv.jpg',
+      'https://files.catbox.moe/qgkgaw.jpg',
+      'https://files.catbox.moe/wt23o5.jpg',
+      'https://files.catbox.moe/kisqz6.jpg'
+    ];
+
+    /* 篇章与氛围多条语录数据库（完整奈须蘑菇原著语料库） */
+    const ATMOSPHERE_QUOTES = {
+      '杀人考察前': {
+        '篇章开始': [
+          '——一九九五年四月，我和她相遇了。',
+          '——一九九五年三月，我和她相遇了。',
+          '在这座早已看惯的城市里，那是唯一脱离了日常的风景。',
+          '从相遇的雪天开始，我就迷上了这双注视着远方的眼眸。'
+        ],
+        '篇章结束': [
+          '尽管如此，你的梦想将继续活下去。',
+          '两仪式只要有一个就够了。'
+        ],
+        '空灵': [
+          '夜色越深，黑暗也变得越发浓郁。',
+          '一个人的确孤独，不过式并非孤单一人。尽管孤立，却不孤独。',
+          '在这片甚至无法确认自我轮廓的雪夜之中。'
+        ],
+        '沉静': [
+          '即使情况尴尬，这段沉默却一点都不难熬。',
+          '不祥的预感，会招来不祥的现实。',
+          '只要在每一个深夜都没有夺走任何人的生命，就能确认那个唯一的答案。'
+        ],
+        '日常': [
+          '人只能展现本身已具有的情感。',
+          '要当朋友，正常异常并不是重点。',
+          '在这个期末考的午后，这件事比任何考题都更令人难以置信。'
+        ],
+        '压抑': [
+          '四周是一片血海，窜入鼻孔的气味来自于黏稠的朱红色。',
+          '唯有在面对纯粹死亡的这一瞬间，才能如此真切地确认自己依然活着。',
+          '式为了保护自己，会不惜杀掉所有妄想打开「式」这个盖子的人。'
+        ],
+        '战斗': [
+          '式为了保护自己，会不惜杀掉所有妄想打开「式」这个盖子的人。',
+          '唯有在面对纯粹死亡的这一瞬间，才能如此真切地确认自己依然活着。',
+          '再这样下去，我一定会杀了你的。'
+        ],
+        '欢快': [
+          '带我去玩吧，要去哪里就由你来决定。',
+          '再见。我很中意你，我们很快就会再见面的。',
+          '平安可不是向看不见的东西低头就能得到的。'
+        ],
+        '悲伤': [
+          '式有办法活下去，只要我代替式死去就可以。',
+          '我所经历过的情感，就只有杀人而已。',
+          '前途一片黑暗，的确很符合我的风格。'
+        ]
+      },
+      '伽蓝之洞': {
+        '篇章开始': [
+          '如果接受一切，就不会受伤。无论是与我不合的、我讨厌的、我无法认同的，如果毫不抗拒地选择接受，就不会受伤。如果抗拒一切，便只会受伤。',
+          '两颗心是伽蓝洞，唯有肯定与否定两个极端。两者之间，空无一物。两者之间，只有我。',
+          '黑暗没有尽头。不，或许我打从一开始就不是在坠落，因为此处空无一物。不是没有光，是连黑暗也没有。',
+          '即使是形容也毫无意义的「  」之中，只有我的躯体逐渐下沉。',
+          '蔷薇不论怎么种，还是会长出蔷薇。即使孕育的土壤与水份改变，也不会长成其他花朵。'
+        ],
+        '篇章结束': [
+          '两仪织的存在，与他的梦想一起逐渐消失。',
+          '他柔和的笑颜，与我记忆中的笑容如出一辙。',
+          '比起哭泣，我的朋友选择露出笑容。比起孤立，织选择承认孤独。——但我还没有做出选择。',
+          '我茫然地望着他脸上彷佛与柔和的阳光合而为一的笑容，一直看到厌倦为止。',
+          '——虽然知道这么做无法填补胸口的空洞，这仍是我此刻唯一想做的事。'
+        ],
+        '日常': [
+          '和深夜的寂静相比，早晨的忙碌散发出祭典般的热闹气氛。',
+          '时值夏日将近的傍晚，夕阳的红光将没装电灯的事务所染成一片深红。'
+        ],
+        '沉静': [
+          '带着一双自行闭上的眼眸，躺在病床上朦胧不定地存在着。',
+          '入夜之后，医院内安静下来。只有拖鞋偶尔踏过走廊的脚步声。',
+          '这是个无人打扰的静谧早晨，宛若涟漪般的寂静过于健康，让我迷茫。'
+        ],
+        '压抑': [
+          '体内空荡荡的像座洞窟，连空气也如风一般穿透而过。',
+          '仅仅漂浮不定地存在着，对于自己活着的事实极度缺乏真实感。',
+          '缺乏生存实感的我甚至没有活下去的理由，不如干脆选择消失还轻松得多。',
+          '不论悲喜都只属于昔日的两仪式，如今的我就连活下去的意义也没有。'
+        ],
+        '战斗': [
+          '她触摸自己的咽喉，皮开肉绽的伤口正流着血，上头残留着被勒出的指印——不过，她还活着。这感觉让式心醉不已。',
+          '「——不管它是什么，我都杀给你看。」',
+          '「我要杀了软弱的自己。绝对不把两仪式——交给你这家伙。」',
+          '虽然将贯穿两仪式的肉体，但她深信刀子只会杀掉无法存在的杂质，绝不会伤害自己。'
+        ],
+        '悲伤': [
+          '他不在。无论往何处呼唤，都找不到他。两仪式体内的另一个人格，两仪织的气息彻底消失无踪——',
+          '胸口空空荡荡的像个空洞般缺少了什么，连空气也如风一般穿透而过。',
+          '织守护了自己的梦。那个同学就是他对于幸福生活的梦想吗？或者，那名少年是他期望成为的男性？我已无从得知。',
+          '如果哭得出来，我很想流泪，可惜眼眸一片干涸。我决定一生只哭一次——不该为此哭泣。'
+        ],
+        '空灵': [
+          '我漂浮在无光无声的海洋中，一具名叫两仪式的人偶浑身赤裸、毫无遮掩地逐渐沉没。',
+          '「——这就是死亡。」连这声呢喃，都像是梦一样。',
+          '如流动般自然、如腐败般难看，我仅仅数着时间。',
+          '这里是死亡。一个唯有死人才能抵达的世界，活人无法观测的世界。然而，却只有我还活着——',
+          '即使活下去也没有意义可言。明明没有活着的实感却得存在，根本是种苦行。'
+        ],
+        '欢快': [
+          '「我本来以为你会很憔悴，但肌肤还是很有光泽呢。嗯，是我偏好的可爱女孩，我真走运！」',
+          '青年从座位上站起身走向橙子，握住她的双手一起上下挥动……她不明白这动作代表感谢之意，困惑地盯着青年的脸。',
+          '他破颜一笑。那寻常的笑容，就好像我们只是一天不见后又在学校重逢。'
+        ]
+      },
+      '痛觉残留': {
+        '篇章开始': [
+          '唯有这份残留的痛觉，绝对不是错觉。',
+          '在血洼的倒影中，她的嘴角浮现浅笑。',
+          '剧痛令我流出泪水。然而，就连这种不便此刻都让我爱恋。',
+          '当宛如幽灵的少女体验到疼痛的那一刻，不知有多么欣喜。尽管她甚至连欣喜这种感情都不知道。'
+        ],
+        '篇章结束': [
+          '在常识之中生活越久，惩罚的分量就会变得越沉重。浅上藤乃往后活得越是幸福，受到的惩罚就会跟着越是沉重痛苦。',
+          '内心的伤痕不会消失，将一直隐隐作痛。就如同她的痛觉曾经残留过一般，永远不会痊愈。正如你所说的一样，心没有实体——无法治疗上面的伤口。',
+          '暴风雨已经减缓，到了早上雨势就会停歇吧。我只是眺望着沐浴在夏雨中的式。仔细想想——那是她醒来之后，第一次对我展露的真正笑容。'
+        ],
+        '日常': [
+          '只要毫不厌倦地重复一句话，就能扭曲现实，将发展拉向话中的结果。',
+          '再也没有什么时刻，会比跑去买一包没有在抽的烟更让我亲身感受到自己是个滥好人。',
+          '心灵的伤痛立刻就会被人遗忘，因为那点小伤不足一提。可是身体的伤只要伤口还在，就会持续疼痛下去。那是多么强大又确切的生存证明啊。',
+          '人生就是这样的。将种种徒劳无功的尝试累积起来，总有一天能够达成什么吧。'
+        ],
+        '沉静': [
+          '午夜零时过后，我独自走在夜晚的街道上。今晚下过大雨，虽然雨势已在夜色转深后停歇，柏油路上却还残留着水洼。',
+          '墙上有四扇方形的窗户，透过窗子射入的阳光就是唯一的光源。只有靠窗的桌子一片明亮，仿佛被圈在方形的光亮中。',
+          '我喜欢这股疼痛。对于没有生命实感的我来说，再也没有什么事能比这份痛楚更让我体认到自己活着的事实。'
+        ],
+        '压抑': [
+          '屋内充斥着一股馊味，种种怠惰的痕迹，仿佛构成了丑恶的残渣。在橙色火光映照下，这个被疯狂漆上一片赤红的房间，在一切意义上都已宣告完结。',
+          '肚子在发热。那股不快感，如同有一只肉眼看不见的手抓住了我的内脏。',
+          '于是，在就连月光也照射不到的漆黑小巷内，惨剧揭开序幕。',
+          '无法适应社会的人非常多，他们的存在本身却从一开始就无法适应这个社会。他们不应该存在，不，是无法存在。',
+          '那家伙绝对和我是同类。 ——所以，我们一定会在相遇的瞬间展开厮杀。',
+          '她是不伤害他人就无法得到活着的喜悦，丑恶无比的畸形生物。'
+        ],
+        '战斗': [
+          '……我感觉得到，我们非常相像。啊————我要杀了现在这样的你。',
+          '她喜欢互相厮杀。这场战斗越是逼近极限，两仪式就越是欢喜。',
+          '式第一次爱上了藤乃，深深爱到必须亲手夺走她的性命。',
+          '互相厮杀，性命相搏。 就连日常生活都朦胧不定的式，只能用最为单纯、最走投无路的方式得到活着的真实感。'
+        ],
+        '悲伤': [
+          '——是的。非常……非常痛，我快哭了——我可以、哭吗？',
+          '为了报仇，被凌辱长达半年的少女杀了他们。这样做是不是正义？或者正义与社会从来就难以并存？我现在实在没心情思考这些问题。',
+          '即使触摸东西，也无法实地产生触觉。没有感觉，就等于没有身体。存在宛如幽灵。对无痛症患者而言，一切的现实只能旁观。',
+          '在她宛如人偶般沉静的容颜上，唯有限眸仿佛泫然欲泣。'
+        ],
+        '空灵': [
+          '境界朦胧不清。制订境界线的人明明是自己，标准却得出外界来决定。那么，打从一开始就没有境界的存在，整个世界都被区隔在空洞的境界中。',
+          '从这座宛如不夜城般喧嚣的城市望去，远方可以看见巨大的港口。',
+          '现在的我感觉不到我是在依自己的意思行动。我随时都有错觉，两仪式这条十六年的线，就像操纵人偶般操纵着我。'
+        ],
+        '欢快': [
+          '回想起来，浅上藤乃说不定从那时候开始就喜欢着他。喜欢他的笑容，对于原以为没人会发觉，也不肯让任何人发觉的痛苦，付出关怀的笑容————'
+        ]
+      },
+      '未来福音': {
+        '篇章开始': [
+          '这个世界上，存在着两个我。一个我在现在（这里），一个我在未来（那里）。',
+          '我的左眼和右眼各不相同，即使看着同一个事物（世界），也会产生不同视点。一个我拿望远镜眺望远方，一个我从后照镜回顾过往。',
+          '预知结局的我，是不负责任的神明。我只是默默地等待改变不了的未来。',
+          '他对未来不抱期待。人生中发生的事，通通可以顶见。他对未来不抱希望。人生中发生的事，无一不是未知。'
+        ],
+        '篇章结束': [
+          '以上是一切的开端，同时也差不多是结束。这就是我，濑尾静音，与黑桐干也先生命运般的邂逅。',
+          '什么都没有改变，什么都没有解决，我只是尽量不让自己烦恼。如同黑桐大哥对我展现的笑容。要是我不相信当下的自己，哪里还能期待幸福的未来？',
+          '总之，就是这样。一点点的极限，也是充满人性的希望。'
+        ],
+        '日常': [
+          '艳阳散发眩目的光线，将高楼大厦林立的市街包覆在闷热的暑气中。',
+          '跟「忧郁」比起来，这种心境更接近「该来的果然躲不掉」的失落、心死。',
+          '此时此刻，我的未来完全如同三天前所看见，是没有任何新鲜感的平凡日常。'
+        ],
+        '沉静': [
+          '深山内的校园远在都市喧嚣难以企及之处，舒适得像个避暑胜地，早晨也显得格外舒爽。',
+          '大片的玻璃窗外，是晴朗的夏日阳光。每走一步，古老的木造地板便发出一阵咯吱声。',
+          '高楼大厦被盛夏的阳光照得发亮，跟微暗的咖啡店形成对比。',
+          '他不仅相信未来视，更坚定地相信自己的未来。'
+        ],
+        '压抑': [
+          '预知结局的我，是不负责任的神明。我只是默默地等待改变不了的未来。未来不值得期待，不值得抱持希望，不值得我发表什么评论。',
+          '乏味的日子，乏味的未来，乏味的人生。……不过，我自己想必才是最乏味的人。',
+          '这种感觉，有如整个脑袋被人用汤匙挖空，丢进装满汽水的池子。隔着冒汗的玻璃，我同时看见未来与现在，连自己处在哪一边都分不清楚。'
+        ],
+        '战斗': [
+          '所谓的现实，即为数值尚未确定的算式。',
+          '他像一个奴隶，只为了让未来成真，不断在现在和未来之间来回。',
+          '此乃世界的法则，任何人都不可能违背他的预测。',
+          '只要是有形之物，即适用「死亡」的概念。对两仪式而言，那是比螺旋回圈更鲜明的「杀害」对象。',
+          '虽然偶然没有办法掌握，必然倒是可以掌握。在结果变成明确形体的那一刻，未来便走到尽头。'
+        ],
+        '悲伤': [
+          '小时候，我有一只名叫克里斯的柴犬当玩伴。当我看见它临终的未来时，也是这样的心情。那个时候的冰寒，直到现在仍刻划在我的心上。',
+          '那是一种希望，希望对方相信她说的话。也是一种绝望，绝望于对方不可能相信。',
+          '知晓未知者，品尝不到人生喜悦。永不失败者，成功不会来得满足。我所看到的结局，绝对没有扭转的可能。'
+        ],
+        '空灵': [
+          '未来充满不确定性，所以是无敌的。不过，一旦未来有了形体，当然也有可能坏掉。',
+          '未来并没有不同。『未来』这种东西，一开始便不存在。不存在的东西，当然没有办法控制。',
+          '所有活着的人，都会看见未来。在这个世界上，没有哪个人不会从现在的自己想像未来。',
+          '真正的未来都还没成为定局。要是看见无法扭转的未来，便不能称作看见未来，而是「决定了未来」。'
+        ],
+        '欢快': [
+          '——他与她的相遇，不知该说是上天的恩惠，还是上天的惩罚。',
+          '那声音听来冰冷，又很有精神，如同野兽舔着嘴唇，发现可口的猎物。',
+          '名为戒心的蛇伸起长长的脖子，稍微思考一会儿，又佣懒地蜷回一团，继续睡它的大头觉。',
+          '「员工应该自己想办法筹钱」——所长这句颇有问题的话言犹在耳。'
+        ]
+      },
+      '俯瞰风景': {
+        '篇章开始': [
+          '那一天，我选择走大马路回家。对我来说，这是难得的心血来潮。我茫然地走在早已看腻的大楼之间，没多久就有一个人掉了下来。',
+          '在一切全遭到麻醉的世界里，仿佛唯有月亮是活生生的，刺得我的眼睛好痛。',
+          '那一连串的影像，令我幻想起夹在旧书页当中，被压成扁平的押花。'
+        ],
+        '篇章结束': [
+          '虽然根本不值一提，我终究认为自己最后还是应该死于从俯瞰坠落。',
+          '为了我一直轻蔑至今的，存在于我生命中的一切。我必须挺身冲撞所有的死亡，去感受活着的喜悦。',
+          '我们必须活下去，接受自己的所做所为导致的结果。'
+        ],
+        '日常': [
+          '想像自己从高处坠落的样子，并非多么稀奇之事。',
+          '只要还有人记得，就不会回归至无，还有记忆就等于活着，既然是还活着的东西，眼睛自然也就看得到。',
+          '在一切全遭到麻醉的世界里，仿佛唯有月亮是活生生的，刺得我的眼睛好痛。',
+          '由于蝴蝶已经知道了飞翔是什么感觉，再也无法忍受飘浮的微不足道。所以她飞了起来，不再飘浮。'
+        ],
+        '沉静': [
+          '他的救星，对我而言则是决定性的死神。',
+          '在这个短暂存在的密室里，现在无论外界发生什么事都与式没有关连，也无法产生关连。这份实际感受，微微沁入她本应空虚的心。',
+          '香烟的烟雾，渐渐融入白色的阳光中。她俯瞰窗外景色的背影，宛如渗着白光的海市蜃楼。',
+          '由比起周遭建筑物高十层楼的屋顶眺望，那片夜景与其说是美丽，更让人不安。感觉就像登上细长的梯子，俯视着下界一样。'
+        ],
+        '压抑': [
+          '在一切全遭到麻醉的世界里，仿佛唯有月亮是活生生的，刺得我的眼睛好痛。',
+          '风已止息，夜晚的空气就夏季而言冷得异常。如针一般的寒意刺痛我的颈骨。',
+          '人是活在箱中的生物，也只能在箱中生活。人不可获得神的视点，一旦跨越那道界线，就会变成那种怪物。幻视将化为现死，使得两方的分别变得暧昧不明，结果无法判别。',
+          '无拘无束地漫游，自由飞往任何地方。'
+        ],
+        '战斗': [
+          '不管她是幻象还是什么，只要是活着的东西，就算是神我也杀给你看。',
+          '我恐怕永远无法从这股恶寒中逃脱吧。相反地，我已经深深迷上了这种感觉——',
+          '一身随风鼓涨的白衣消融在黑暗中。宛如一朵渐渐沉入深海的白花。'
+        ],
+        '悲伤': [
+          '我讨厌那既非同情也非厌恶的声调。同情是我唯一能够得到的施舍，她却连这点东西也不肯给予。',
+          '坠落的轨迹宛如昂首的蛇，却又形似折断的百合。那身影悲哀无比。',
+          '比起痛楚，那种感觉更令我感到疼痛。因为那既是恐惧，也是无可言喻的快感。掠过背脊的恶寒强烈得几乎让我疯狂，我浑身抖个不停。',
+          '如果真的能和他一起前往什么地方，那该有何等幸福。因为这是无法实现、是不可以实现的梦想，才会如此美丽。',
+          '我大概无法再奢求那样令人震撼的死法，那种如针剑、雷电一般贯穿我全身的死法。'
+        ],
+        '空灵': [
+          '就这样，传闻中的少女倚月飞行着。',
+          '人是活在箱中的生物，也只能在箱中生活。人不可获得神的视点，一旦跨越那道界线，就会变成那种怪物。',
+          '月亮是洞穴，只像一个凿穿夜空这张黑色图画纸的巨大洞穴。',
+          '即使在坠落时，她的黑发也没有凌乱飞舞，一身随风鼓涨的白衣消融在黑暗中。宛如一朵渐渐沉入深海的白花。'
+        ],
+        '欢快': [
+          '由于蝴蝶已经知道了飞翔是什么感觉，再也无法忍受飘浮的微不足道。',
+          '我原本就没有怀抱那种憧憬。我不认为自己活着，也不晓得生存的痛苦。',
+          '比起痛楚，那种感觉更令我感到疼痛。因为那既是恐惧，也是无可言喻的快感。'
+        ]
+      },
+      '矛盾螺旋': {
+        '篇章开始': [
+          '喀锵，喀锵。开始时一次，结束时一次。一天正好能画出一个圆形，就这样每天重复着这样的动作。',
+          '不停转动的每一天，就如同理发店的招牌。但是，如同无尽螺旋的日子唐突地结束了。',
+          '所谓的变成大人，就是明智地将幻想取代。自以为早熟的愚昧，让我骄傲地接受了这个事实。'
+        ],
+        '篇章结束': [
+          '但我想要跟这个太过平和的对象，一起度过这没有多少变化、有如螺旋的每一天。',
+          '季节是冬季。街上，开始下起四年不见的雪。跟两仪式与黑桐干也相遇的时候一样，飘落着红色的雪花——',
+          '那股烟，有如不存在的海市蜃楼般晃动着。',
+          '荒耶宗莲只剩下一张嘴，在言语还没有变成声音前就消失了。那股烟，有如不存在的海市蜃楼般晃动着。'
+        ],
+        '日常': [
+          '不做作的白色桌子上，映照着从窗户射入的白色阳光。其他部分，则是店里干燥阴影的黑。这两股明暗营造出有如教堂般的气氛。',
+          '我不愿与迟早必须永远分别的对象太过亲近。一旦直接叫她「式」，我一定再也无法离开这名少女。',
+          '居然想为了一个连名字都不清楚的女人溜进从前任职的公司偷锁，我也变得十分缺乏常识啊。',
+          '两仪只为了自己该做的事而欣喜、复活，散发出没有半分冗赘的完美。',
+          '得重感冒的她看来沉稳又美丽，简直判若两人。',
+          '冷酷的一言行举止、冷酷的思想、冷酷的理论——脱下眼镜的她，正是由这些描述构成的人物。'
+        ],
+        '沉静': [
+          '——在这个连路灯、甚至是月光都照射不到的垃圾堆中，唯独她的头顶仿佛有银色光芒倾注而下。',
+          '——除了杀，这家伙对爱情一无所知。',
+          '只要她判断一件事对两仪本人来说很无趣，无论事情将对自己造成多大的影响，她都会放着不管。',
+          '这四种盐基交叠出的单纯螺旋，却藉着无止境的累积陷入不可能测量的矛盾中，无法进行分析。',
+          '这时，彷佛只有月光还存活着。'
+        ],
+        '压抑': [
+          '我抱住与臙条巴的意志无关兀自颤抖的身躯，拼命忍下莫名想哭的冲动，感觉到秋季与我的末日即将到来。',
+          '在这不断重复名为日常的螺旋建筑物，是人类体验一切死之原型的漩涡。',
+          '只有黑暗。卡答卡答卡答卡答。在耳朵的深处，响起这种声音。身体，还有关节，十分沉重。',
+          '完全像是整个房间被真空塑胶膜包起来似的，过于沉重的压迫感。',
+          '只有一个被蒸汽和水声包围的地下室。那是连自己死了都不知道，到今天也还继续梦见日常之轮的脑髓灵魂安置所。'
+        ],
+        '战斗': [
+          '「肃」的叫声，被「斩」的刀光砍断了。原本应该被压碎的空间歪曲，在她的眼前整个被杀掉了。',
+          '白色的和服在黑暗中流淌。两仪式光用一步，就把四公尺的距离化为零。',
+          '刀刺中了魔术师的胸口中央。自己生命消失的感觉，让魔术师感到厌恶。',
+          '透过心境重塑身体。只要拥有面对战斗的心境，一切将变得截然不同。',
+          '所谓魔术师这一类人呢，对待弟子也好亲人也好都和自身无异。因为是如同自己分身一般的存在，所以也会拼上性命来守护。',
+          '无限，并不是「  」。要让无限成为无限，就必须界定出有限才行。'
+        ],
+        '悲伤': [
+          '既然救不了他们，至少要将他们的死明确记录下来。把至今的人生，还有未来等待人生给保留下来。生命的意义，就是要去体会痛苦。',
+          '那种梦一般幸福的日子，我竟然也有过。那种理所当然般的幸福，我也曾拥有。',
+          '此时我终于察觉，我对自己的性命毫不在乎。',
+          '身体变得粉碎，连头也没有留下。有如一开始就是那样一般，变成魔术师所说的无价值灰烬，消失在虚无之中。'
+        ],
+        '空灵': [
+          '如梦一般、白色耀眼的阳光，让街道有如海市蜃楼般的朦胧，看惯的路也变得像沙漠一样舒眼。',
+          '我总觉得在旋转的时钟里没有容身之处，为此感到恐惧。',
+          '那不顾一切奔驰的身影令我的泪水止不住地溢出眼眶。如果人真的有前世，我大概是一匹马吧。',
+          '英雄在一个时代只有一个。拯救世界这种程度的事情在现代还不至于被称为英雄。'
+        ],
+        '欢快': [
+          '这或许就是命运。因为早在许久以前，我的眼里就只有她一个人了。',
+          '——我喜欢奔跑。唯有这一点曾是我的真实，我也曾抱着不输给任何阻碍的心。',
+          '……我撤回前言。我居然认为这家伙可爱，肯定是一时迷惑。',
+          '突然像变了一个人似的活跃起来的某人。仅在那一刻人格转变与恶人斗争的某人。那都是名为抑止力的，灵长的守护者。'
+        ]
+      },
+      '忘却录音': {
+        '篇章开始': [
+          '浓雾弥漫的森林深处，绿草芬芳与虫儿鸣啼。我一路前往远方。我一路走向远方。在没有太阳的草原上，我和美丽的小家伙们邂逅。',
+          '「不用回去，这里一直是永恒。」孩子们开始唱起歌来。不过，永恒到底是什么？「就是一直留在这里。」「就是一直没有改变。」',
+          '生奶般的雾气逐渐消散，回家之路消失无踪。我不了解永恒。我必须尽快回家。遥远的彼方有我的家。'
+        ],
+        '篇章结束': [
+          '夕阳西下，天际的星星开始闪烁。如冻结般的明月，也出现在头顶上。',
+          '我把她留了下来，从孩子们的校舍离开。落在森林里的雨成为浓雾，仿佛是要隐藏归途。',
+          '……这个时候，黑桐干也成为我重要的人，我想他是比我还重要，绝不能失去的人。',
+          '在如此漫长的时间里，他初次实际感受到自己在笑。'
+        ],
+        '日常': [
+          '礼拜仪式早晚都有，弥撒则是每周日举行一次，学生有义务参与的只有礼拜，弥撒可以自由前往。',
+          '我不想当个天才，也不想被当成好学生，因为那样一点也不特别。我非得达成不可的事，是某种言语无法形容的「不一样」。',
+          '一直以来，黑桐鲜花都对哥哥很任性，可是连句对不起也没说过。',
+          '这样的她要是真的生气，可是会引起大大的骚动，让人联想到受伤的熊这种动物。',
+          '所谓的天才，到最后只是把自己当成对手。'
+        ],
+        '沉静': [
+          '空气充斥泉涌般的香气，并且带有颜色，混杂着树叶散发的香气和虫鸣声，让人为之陶醉。那是有如成熟果实似的甜腻空气，仿佛时间缓慢前进般的景色。',
+          '在砍伐林木后形成的圆形广场上，校舍毫无声息地矗立着。广场上长满杂草，感觉像是草原。校舍彷佛临终前的老人般，静候着生涯最后一刻来临。',
+          '外头没有亮光，只有树木构成的黑暗。连月光都无法照进森林，让这间宿舍有如深渊般的寂静。'
+        ],
+        '压抑': [
+          '所谓的忘记，其实是记忆劣化。回忆是一种不会消失、只会逐渐褪色的废弃物。',
+          '大部分的人，都借由忘却自身的罪孽存活下去。把自己污秽丑陋的一面，当作不存在一样生活着。这不是坏事，反倒可以说是一种生物上的优点。',
+          '他们说，让我们永远在一起吧。可是我只想要回家。我知道被妖精抓走的小孩再回不了家，于是拼了命从他们那里逃了出来。'
+        ],
+        '战斗': [
+          '那是个很温和、如同孩童般的笑靥，但是没有颜色，只有空虚的内在情感。',
+          '但是，我的身体却想立刻杀了眼前这个男人，它想要解决式的悲哀和痛苦。',
+          '魔术师沉稳地微笑着。在那之中既没有敌意、也没有恶意；既没有善意、也没有好意。',
+          '我的心愿——那正是我想遗忘的——属于我的真实。'
+        ],
+        '悲伤': [
+          '浓雾弥漫的森林深处，我一定，永远回不去了。',
+          '他一直目送她的背影到最后，却还是不知道，那个学生到底是谁呢？',
+          '「即使那样，结果也是相同的，不是吗，老师？」……那时候，美沙夜如果这么告诉他就好了。',
+          '黄路美沙夜留下这句话之后，往地上倒了下去。她忏悔似地将脸伏在地上，笑了起来。细细的笑容，像是哭泣一般蔓延开来。',
+          '即使比人拥有多一倍的同情心，即使想哭的感觉比别人多一倍，这个人还是绝对不会哭泣。哭泣这个行为很特别，正因为会带给周围绝大的影响，所以——这个人不会哭泣。'
+        ],
+        '空灵': [
+          '——没有永恒便是一种永恒。不回归永恒是不行的，因为感叹会再次重生。即使你想彻底忘记，记忆还是确实为你录制起来了。',
+          '所谓的『记录』，指的是连自己都无法影响到的灵魂核心，这才是真正能永远保留的东西，因为它就存放在我们的身体里，而且跟所有本性与自我全部融合为一。',
+          '无法有所回报啊，所谓永远，明明何处皆存在……白色烟雾……缓缓飘浮着。',
+          '被遗忘的事物，仿佛理所当然般遭到忘却，以从此不再扭曲的型态沉睡着。忘却这种行为的本身，便是定义永远的一种方法。'
+        ],
+        '欢快': [
+          '我彻底分析过干也的喜好，要让他爱上我，就像折断竹筷那么简单。',
+          '于是两仪式放弃告诉他理由，让嘴角保持笑容继续行走着。',
+          '不具有普通性的语言，将被剥夺意义而成为单纯的发音。'
+        ]
+      },
+      '杀人考察后': {
+        '篇章开始': [
+          '身体冻僵了，仅有吐出的气息略带热度。望着彼此即将停止的心脏鼓动。',
+          '只要有你在身边，即使只是并肩走路，我也感到高兴。然后，极为珍惜的记忆，随即就会消失而化为眷恋。',
+          '第一次相会时，雪白的夜与漆黑的伞。——那的确是，犹如梦境，日复一日的眷恋。'
+        ],
+        '篇章结束': [
+          '弯曲的归途。即使路途遥远，即使是让人觉得会迷失的道路，也有个人牵着自己的手一路同行。',
+          '我想要的，并非是小刀或者其他物品，仅仅只是那只手掌而已。我想，不论以后遇到什么事，我都不会松开自己的手。',
+          '我接受了现在的自己和以前的式，过着日复一日的普通生活。然后，就如同这个季节……静静地等待那个严冬结束，新春到来的时刻。'
+        ],
+        '日常': [
+          '在雨天。如白雾般来临的放学时间。',
+          '在下雪时。第一次相会时，雪白的夜与漆黑的伞。',
+          '在黄昏。教堂景色犹如烈火燃烧的色彩。',
+          '……即使如此，我还是无法安心下来。',
+          '或许是原本不擅长的东西，升级为厌恶的东西，因而变成了我的原动力。'
+        ],
+        '沉静': [
+          '血的腥味在雨水冲刷之下，已经无法再继续追踪了。路上的行人零零落落，甚至会让人误认只有自己一个人在行走。',
+          '从没有窗帘的窗户可以看到一整片大海。在散乱垃圾的房间内，只有那扇窗户像挂着的美术品一样，十分不搭调。',
+          '话语在落下的雨声之中消失。的确，留下来的，只有像是相互紧拥般的指尖。'
+        ],
+        '压抑': [
+          '……就在夏季结束之际，我对第一次露出笑容的你发誓。',
+          '如果发疯了，杀人也是一件没办法的事。',
+          '……因为我会杀了干也，因此必须从他的身边远离才行。',
+          '……我曾经下过决心。如果我要哭泣，就得在那个人死的时候才能哭。',
+          '带刺的舌头，一边舔一边往上游走——让人感觉想要发抖。'
+        ],
+        '战斗': [
+          '影子有如蛇一般扭曲蛇行着。狭窄的暗巷，对杀人魔来说是个宽广的狩猎场。',
+          '两仪式的样子，美丽到让人觉得凄绝。',
+          '鲜血淌落、受到伤害、身体逐渐冰冷。不过，却会不感到疼痛。',
+          '即将消失的生命，彷佛海市蜃楼般美丽至极。',
+          '被灰色亮光映照的模样，有如替死者送别的神父般，不带有任何的色彩。'
+        ],
+        '悲伤': [
+          '——只要有你在，只有你微笑，那就是幸福。',
+          '杀了某人，等同于杀了自己，这么简单的事实。',
+          '仅仅只有一次的死相当重要。如果你杀害了他人而用掉自己的死，将永远没办法杀死自己，也无法作为一个人而死去。',
+          '如果我没有了干也，就失去了活下去的意义了。就像是野兽了解火的温暖之后，再也无法回去一样，我已无法回到以前那个空洞的自己了。',
+          '我很高兴。你把我当作普通人一般对待。'
+        ],
+        '空灵': [
+          '——那真的是，犹如梦境般的日子。',
+          '……明明会一起散步。',
+          '……明明会握着我肮脏的手，走在回家的路上。',
+          '……明明有那些像是梦境般的每一天。',
+          '犹如飞离水面的白鸟。走到结局，仅是瞬间的事。'
+        ],
+        '欢快': [
+          '我单纯喜欢上他那不带心机的笑容。',
+          '时间飞逝的速度，想抓都抓不住。不过我很感激美好得犹如谎言般的幸福。',
+          '那个你相信的我，以及你所喜爱的我。即使知道会消失，我依然要杀了它。',
+          '因为从好几年前开始，我就任性地喜欢上你。现在也是一样，即使式讨厌我，我也要任性地决定让你照顾我。'
+        ]
+      },
+      '日常': {
+        '篇章开始': [
+          '第一次相会时，雪白的夜与漆黑的伞。——那的确是，犹如梦境，日复一日的眷恋。'
+        ],
+        '篇章结束': [
+          '和四年前初次和她邂逅时相同。独自一个人静静地，歌颂着雪走上归途。'
+        ],
+        '日常': [
+          '不起波澜，像是融入时间一样，作为芸芸众生的平均数而活着，静静地呼吸着自己的空气。',
+          '说到底，人类只不过是在自己这个空壳中做着梦而已。明明是那么地显而易见的。',
+          '即使是自己看不惯的事物，就算是自己厌恶的事物，即使是自己不能认同的事物，只要毫不抵抗加以接受，那么就不会受到伤害。',
+          '即使是自己习惯的事物，就算是自己喜欢的事物，即使自己可以认同的事物，如果不愿同意而加以排斥，那么注定会受到伤害。',
+          '伽蓝之堂日常琐记。',
+          '平静无波的日子里，泡一杯红茶。'
+        ],
+        '沉静': [
+          '式与织，阴与阳，善与恶。不因为对立而分离。',
+          '废弃建筑的四层，事务所里弥漫着淡淡的烟草香。'
+        ],
+        '压抑': [
+          '如果来者不拒完全接受，那么就不会受到伤害。',
+          '如果来者皆拒都不接受，那么就注定会受到伤害。'
+        ],
+        '战斗': [
+          '不与任何事物产生争执，不对任何人带有憎恨地活着是不可能的。',
+          '人就是在每一个人都巨不相同的意义上存在的生物。',
+          '只凭藉着身为同一种类这种依靠，为了将无法相互理解的隔阂，淡化为「空」之境界而活下去。',
+          '明明知道那一日不会到来，却依然做着那样的梦而活着。'
+        ],
+        '悲伤': [
+          '——只要有你在，只有你微笑，那就是幸福。',
+          '杀了某人，等同于杀了自己，这么简单的事实。',
+          '话语像是被纷纷降下的雪埋葬，静静地溶入了黑暗之中。',
+          '我很高兴。你把我当作普通人一般对待。'
+        ],
+        '空灵': [
+          '——那真的是，犹如梦境般的日子。',
+          '犹如飞离水面的白鸟。走到结局，仅是瞬间的事。'
+        ],
+        '欢快': [
+          '我单纯喜欢上他那不带心机的笑容。',
+          '时间飞逝的速度，想抓都抓不住。不过我很感激美好得犹如谎言般的幸福。',
+          '那个你相信的我，以及你所喜爱的我。即使知道会消失，我依然要杀了它。',
+          '因为从好几年前开始，我就任性地喜欢上你。现在也是一样，即使式讨厌我，我也要任性地决定让你照顾我。'
+        ]
+      }
+    };
+
+    /* 音乐数据库完整配置 */
+    const MUSIC_DATABASE = {
+      '杀人考察前': {
+        '篇章开始': ['https://files.catbox.moe/92ihge.mp3'],
+        '篇章结束': ['https://files.catbox.moe/sdwqmy.mp3'],
+        '空灵': [
+          'https://files.catbox.moe/92ihge.mp3',
+          'https://files.catbox.moe/cal8w5.mp3',
+          'https://files.catbox.moe/r8kn7w.mp3',
+          'https://files.catbox.moe/6h1eh4.mp3',
+          'https://files.catbox.moe/xch1x2.mp3',
+          'https://files.catbox.moe/zg0qo2.mp3',
+          'https://files.catbox.moe/z9jk4p.mp3',
+          'https://files.catbox.moe/6j6rx3.mp3',
+          'https://files.catbox.moe/layx05.mp3',
+          'https://files.catbox.moe/cppf9m.mp3'
+        ],
+        '沉静': [
+          'https://files.catbox.moe/92ihge.mp3',
+          'https://files.catbox.moe/cal8w5.mp3',
+          'https://files.catbox.moe/gowrfo.mp3',
+          'https://files.catbox.moe/r8kn7w.mp3',
+          'https://files.catbox.moe/o1aqsq.mp3',
+          'https://files.catbox.moe/xch1x2.mp3',
+          'https://files.catbox.moe/z9jk4p.mp3',
+          'https://files.catbox.moe/6j6rx3.mp3',
+          'https://files.catbox.moe/cppf9m.mp3'
+        ],
+        '日常': [
+          'https://files.catbox.moe/92ihge.mp3',
+          'https://files.catbox.moe/gowrfo.mp3',
+          'https://files.catbox.moe/6bjg4u.mp3',
+          'https://files.catbox.moe/6h1eh4.mp3',
+          'https://files.catbox.moe/x6x2p3.mp3',
+          'https://files.catbox.moe/o1aqsq.mp3',
+          'https://files.catbox.moe/i7b95p.mp3',
+          'https://files.catbox.moe/6j6rx3.mp3',
+          'https://files.catbox.moe/2mcr2n.mp3',
+          'https://files.catbox.moe/8ed8fo.mp3'
+        ],
+        '压抑': [
+          'https://files.catbox.moe/s2j4wx.mp3',
+          'https://files.catbox.moe/ir42cm.mp3',
+          'https://files.catbox.moe/558yee.mp3',
+          'https://files.catbox.moe/nnhnj5.mp3',
+          'https://files.catbox.moe/ph47bn.mp3',
+          'https://files.catbox.moe/nw9z3e.mp3',
+          'https://files.catbox.moe/ev8zge.mp3',
+          'https://files.catbox.moe/v9zd7e.mp3'
+        ],
+        '战斗': [
+          'https://files.catbox.moe/ir42cm.mp3',
+          'https://files.catbox.moe/nw9z3e.mp3',
+          'https://files.catbox.moe/ev8zge.mp3'
+        ],
+        '欢快': [
+          'https://files.catbox.moe/x6x2p3.mp3',
+          'https://files.catbox.moe/8ed8fo.mp3',
+          'https://files.catbox.moe/layx05.mp3',
+          'https://files.catbox.moe/7f3pxo.mp3'
+        ],
+        '悲伤': [
+          'https://files.catbox.moe/i7b95p.mp3',
+          'https://files.catbox.moe/zg0qo2.mp3',
+          'https://files.catbox.moe/z9jk4p.mp3'
+        ]
+      },
+      '伽蓝之洞': {
+        '篇章开始': ['https://files.catbox.moe/i6teji.mp3'],
+        '篇章结束': ['https://files.catbox.moe/q8im0e.mp3'],
+        '空灵': [
+          'https://files.catbox.moe/t6xqw9.mp3',
+          'https://files.catbox.moe/jf9w35.mp3',
+          'https://files.catbox.moe/y8gpp7.mp3',
+          'https://files.catbox.moe/wbc1gi.mp3',
+          'https://files.catbox.moe/6dy0h2.mp3',
+          'https://files.catbox.moe/uho3ux.mp3',
+          'https://files.catbox.moe/7f3pxo.mp3',
+          'https://files.catbox.moe/u334wl.mp3'
+        ],
+        '沉静': [
+          'https://files.catbox.moe/d1tkvz.mp3',
+          'https://files.catbox.moe/jf9w35.mp3',
+          'https://files.catbox.moe/wbc1gi.mp3',
+          'https://files.catbox.moe/uho3ux.mp3',
+          'https://files.catbox.moe/fypgm5.mp3'
+        ],
+        '日常': [
+          'https://files.catbox.moe/d1tkvz.mp3',
+          'https://files.catbox.moe/jf9w35.mp3',
+          'https://files.catbox.moe/uho3ux.mp3',
+          'https://files.catbox.moe/7f3pxo.mp3'
+        ],
+        '压抑': [
+          'https://files.catbox.moe/xf4mxe.mp3',
+          'https://files.catbox.moe/6s1kze.mp3',
+          'https://files.catbox.moe/uabsgq.mp3',
+          'https://files.catbox.moe/6dy0h2.mp3',
+          'https://files.catbox.moe/fypgm5.mp3'
+        ],
+        '战斗': [
+          'https://files.catbox.moe/u334wl.mp3',
+          'https://files.catbox.moe/kjfegw.mp3'
+        ],
+        '欢快': ['https://files.catbox.moe/7f3pxo.mp3'],
+        '悲伤': [
+          'https://files.catbox.moe/wbc1gi.mp3',
+          'https://files.catbox.moe/6dy0h2.mp3',
+          'https://files.catbox.moe/d1tkvz.mp3'
+        ]
+      },
+      '痛觉残留': {
+        '篇章开始': ['https://files.catbox.moe/zxz9q2.mp3'],
+        '篇章结束': ['https://files.catbox.moe/r8f7iz.mp3'],
+        '空灵': [
+          'https://files.catbox.moe/ceejxx.mp3',
+          'https://files.catbox.moe/4cmoh8.mp3',
+          'https://files.catbox.moe/k3mxn0.mp3',
+          'https://files.catbox.moe/30gr03.mp3',
+          'https://files.catbox.moe/8rvolo.mp3',
+          'https://files.catbox.moe/pxhih7.mp3',
+          'https://files.catbox.moe/cgwz28.mp3',
+          'https://files.catbox.moe/jweyis.mp3'
+        ],
+        '沉静': [
+          'https://files.catbox.moe/ceejxx.mp3',
+          'https://files.catbox.moe/6vpds6.mp3',
+          'https://files.catbox.moe/ga8z7b.mp3',
+          'https://files.catbox.moe/30gr03.mp3',
+          'https://files.catbox.moe/8178fz.mp3',
+          'https://files.catbox.moe/cgwz28.mp3'
+        ],
+        '日常': [
+          'https://files.catbox.moe/r4dxoy.mp3',
+          'https://files.catbox.moe/ga8z7b.mp3',
+          'https://files.catbox.moe/30gr03.mp3',
+          'https://files.catbox.moe/8178fz.mp3',
+          'https://files.catbox.moe/cgwz28.mp3',
+          'https://files.catbox.moe/jweyis.mp3',
+          'https://files.catbox.moe/o81ebu.mp3',
+          'https://files.catbox.moe/mmsr7b.mp3',
+          'https://files.catbox.moe/fowc9h.mp3'
+        ],
+        '压抑': [
+          'https://files.catbox.moe/ceejxx.mp3',
+          'https://files.catbox.moe/4cmoh8.mp3',
+          'https://files.catbox.moe/vwqe5z.mp3',
+          'https://files.catbox.moe/r4dxoy.mp3',
+          'https://files.catbox.moe/k3mxn0.mp3',
+          'https://files.catbox.moe/2ow6rp.mp3',
+          'https://files.catbox.moe/rc5hc0.mp3',
+          'https://files.catbox.moe/30gr03.mp3',
+          'https://files.catbox.moe/8rvolo.mp3'
+        ],
+        '战斗': [
+          'https://files.catbox.moe/2ow6rp.mp3',
+          'https://files.catbox.moe/pxhih7.mp3',
+          'https://files.catbox.moe/5y4917.mp3'
+        ],
+        '欢快': [
+          'https://files.catbox.moe/mmsr7b.mp3',
+          'https://files.catbox.moe/fowc9h.mp3'
+        ],
+        '悲伤': [
+          'https://files.catbox.moe/6vpds6.mp3',
+          'https://files.catbox.moe/2ow6rp.mp3',
+          'https://files.catbox.moe/ga8z7b.mp3',
+          'https://files.catbox.moe/8178fz.mp3',
+          'https://files.catbox.moe/8rvolo.mp3',
+          'https://files.catbox.moe/cgwz28.mp3',
+          'https://files.catbox.moe/jweyis.mp3',
+          'https://files.catbox.moe/o81ebu.mp3'
+        ]
+      },
+      '未来福音': {
+        '篇章开始': ['https://files.catbox.moe/i1p960.mp3'],
+        '篇章结束': ['https://files.catbox.moe/pol242.mp3'],
+        '空灵': [
+          'https://files.catbox.moe/gyfumk.mp3',
+          'https://files.catbox.moe/6du9hr.mp3',
+          'https://files.catbox.moe/l4y3gi.mp3',
+          'https://files.catbox.moe/t2rsvp.mp3',
+          'https://files.catbox.moe/l1mmf7.mp3',
+          'https://files.catbox.moe/xrt08l.mp3',
+          'https://files.catbox.moe/5h3mo3.mp3',
+          'https://files.catbox.moe/8lwd8k.mp3',
+          'https://files.catbox.moe/qlzhlh.mp3',
+          'https://files.catbox.moe/wqhgk2.mp3',
+          'https://files.catbox.moe/re5xfg.mp3',
+          'https://files.catbox.moe/ls9o90.mp3'
+        ],
+        '沉静': [
+          'https://files.catbox.moe/gyfumk.mp3',
+          'https://files.catbox.moe/0b705n.mp3',
+          'https://files.catbox.moe/efbh4g.mp3',
+          'https://files.catbox.moe/hw1vty.mp3',
+          'https://files.catbox.moe/9y85iy.mp3',
+          'https://files.catbox.moe/l1mmf7.mp3',
+          'https://files.catbox.moe/j6dr6z.mp3',
+          'https://files.catbox.moe/5h3mo3.mp3',
+          'https://files.catbox.moe/8lwd8k.mp3',
+          'https://files.catbox.moe/qlzhlh.mp3',
+          'https://files.catbox.moe/wqhgk2.mp3',
+          'https://files.catbox.moe/qs2yzq.mp3',
+          'https://files.catbox.moe/ls9o90.mp3'
+        ],
+        '日常': [
+          'https://files.catbox.moe/gyfumk.mp3',
+          'https://files.catbox.moe/0b705n.mp3',
+          'https://files.catbox.moe/efbh4g.mp3',
+          'https://files.catbox.moe/hw1vty.mp3',
+          'https://files.catbox.moe/t2rsvp.mp3',
+          'https://files.catbox.moe/l1mmf7.mp3',
+          'https://files.catbox.moe/j6dr6z.mp3',
+          'https://files.catbox.moe/xrt08l.mp3',
+          'https://files.catbox.moe/dehs62.mp3',
+          'https://files.catbox.moe/8lwd8k.mp3',
+          'https://files.catbox.moe/wqhgk2.mp3',
+          'https://files.catbox.moe/wxgqkz.mp3',
+          'https://files.catbox.moe/tvscah.mp3',
+          'https://files.catbox.moe/c33rz3.mp3'
+        ],
+        '压抑': [
+          'https://files.catbox.moe/n1hfzd.mp3',
+          'https://files.catbox.moe/ek8qrk.mp3',
+          'https://files.catbox.moe/l4y3gi.mp3',
+          'https://files.catbox.moe/1e1vo7.mp3',
+          'https://files.catbox.moe/u5u4ux.mp3',
+          'https://files.catbox.moe/2jxuo2.mp3'
+        ],
+        '战斗': [
+          'https://files.catbox.moe/6du9hr.mp3',
+          'https://files.catbox.moe/aqere4.mp3',
+          'https://files.catbox.moe/m94xvc.mp3'
+        ],
+        '欢快': [
+          'https://files.catbox.moe/0b705n.mp3',
+          'https://files.catbox.moe/hw1vty.mp3',
+          'https://files.catbox.moe/l1mmf7.mp3',
+          'https://files.catbox.moe/j6dr6z.mp3',
+          'https://files.catbox.moe/dehs62.mp3',
+          'https://files.catbox.moe/wxgqkz.mp3',
+          'https://files.catbox.moe/tvscah.mp3',
+          'https://files.catbox.moe/c33rz3.mp3'
+        ],
+        '悲伤': [
+          'https://files.catbox.moe/9y85iy.mp3',
+          'https://files.catbox.moe/re5xfg.mp3',
+          'https://files.catbox.moe/qs2yzq.mp3',
+          'https://files.catbox.moe/23tm4f.mp3'
+        ]
+      },
+      '俯瞰风景': {
+        '篇章开始': ['https://files.catbox.moe/44cg30.mp3'],
+        '篇章结束': ['https://files.catbox.moe/l2aina.mp3'],
+        '空灵': [
+          'https://files.catbox.moe/o13qsr.mp3',
+          'https://files.catbox.moe/oqq4n7.mp3',
+          'https://files.catbox.moe/ztlaez.mp3',
+          'https://files.catbox.moe/q45tik.mp3',
+          'https://files.catbox.moe/el9cz7.mp3',
+          'https://files.catbox.moe/kqxfix.mp3',
+          'https://files.catbox.moe/mk112l.mp3',
+          'https://files.catbox.moe/7t6o3u.mp3',
+          'https://files.catbox.moe/m00ikp.mp3',
+          'https://files.catbox.moe/387d3f.mp3',
+          'https://files.catbox.moe/b3m0se.mp3'
+        ],
+        '沉静': [
+          'https://files.catbox.moe/o13qsr.mp3',
+          'https://files.catbox.moe/ztlaez.mp3',
+          'https://files.catbox.moe/kqxfix.mp3',
+          'https://files.catbox.moe/sngxel.mp3',
+          'https://files.catbox.moe/81vesv.mp3',
+          'https://files.catbox.moe/m00ikp.mp3',
+          'https://files.catbox.moe/387d3f.mp3',
+          'https://files.catbox.moe/b3m0se.mp3'
+        ],
+        '日常': [
+          'https://files.catbox.moe/sngxel.mp3',
+          'https://files.catbox.moe/m00ikp.mp3',
+          'https://files.catbox.moe/387d3f.mp3',
+          'https://files.catbox.moe/fsmc3h.mp3',
+          'https://files.catbox.moe/ztlaez.mp3',
+          'https://files.catbox.moe/q45tik.mp3'
+        ],
+        '压抑': [
+          'https://files.catbox.moe/oqq4n7.mp3',
+          'https://files.catbox.moe/ib9mwc.mp3',
+          'https://files.catbox.moe/n2t05d.mp3',
+          'https://files.catbox.moe/el9cz7.mp3',
+          'https://files.catbox.moe/c95cth.mp3',
+          'https://files.catbox.moe/mk112l.mp3',
+          'https://files.catbox.moe/7t6o3u.mp3',
+          'https://files.catbox.moe/m00ikp.mp3'
+        ],
+        '战斗': [
+          'https://files.catbox.moe/ib9mwc.mp3',
+          'https://files.catbox.moe/n2t05d.mp3',
+          'https://files.catbox.moe/el9cz7.mp3',
+          'https://files.catbox.moe/c95cth.mp3',
+          'https://files.catbox.moe/5dvehm.mp3',
+          'https://files.catbox.moe/7t6o3u.mp3'
+        ],
+        '欢快': ['https://files.catbox.moe/ztlaez.mp3'],
+        '悲伤': [
+          'https://files.catbox.moe/q45tik.mp3',
+          'https://files.catbox.moe/81vesv.mp3',
+          'https://files.catbox.moe/m00ikp.mp3',
+          'https://files.catbox.moe/387d3f.mp3'
+        ]
+      },
+      '矛盾螺旋': {
+        '篇章开始': ['https://files.catbox.moe/yefwbm.mp3'],
+        '篇章结束': ['https://files.catbox.moe/qt6sa6.mp3'],
+        '空灵': [
+          'https://files.catbox.moe/yefwbm.mp3',
+          'https://files.catbox.moe/ymfvsl.mp3',
+          'https://files.catbox.moe/ujcblw.mp3',
+          'https://files.catbox.moe/lh1vuy.mp3',
+          'https://files.catbox.moe/yn35js.mp3',
+          'https://files.catbox.moe/ou14vt.mp3',
+          'https://files.catbox.moe/jbls5i.mp3',
+          'https://files.catbox.moe/hbha3c.mp3',
+          'https://files.catbox.moe/euegqa.mp3',
+          'https://files.catbox.moe/duzn5s.mp3',
+          'https://files.catbox.moe/x4ifnv.mp3'
+        ],
+        '沉静': [
+          'https://files.catbox.moe/ymfvsl.mp3',
+          'https://files.catbox.moe/p8yydy.mp3',
+          'https://files.catbox.moe/xmzsax.mp3',
+          'https://files.catbox.moe/ujcblw.mp3',
+          'https://files.catbox.moe/wml3pl.mp3',
+          'https://files.catbox.moe/ou14vt.mp3',
+          'https://files.catbox.moe/jbls5i.mp3',
+          'https://files.catbox.moe/hbha3c.mp3',
+          'https://files.catbox.moe/sr3yic.mp3'
+        ],
+        '日常': [
+          'https://files.catbox.moe/p8yydy.mp3',
+          'https://files.catbox.moe/xmzsax.mp3',
+          'https://files.catbox.moe/ujcblw.mp3',
+          'https://files.catbox.moe/h2m9wn.mp3',
+          'https://files.catbox.moe/hbha3c.mp3',
+          'https://files.catbox.moe/x4ifnv.mp3',
+          'https://files.catbox.moe/uatii4.mp3'
+        ],
+        '压抑': [
+          'https://files.catbox.moe/yefwbm.mp3',
+          'https://files.catbox.moe/pe1ys1.mp3',
+          'https://files.catbox.moe/xmzsax.mp3',
+          'https://files.catbox.moe/lh1vuy.mp3',
+          'https://files.catbox.moe/yn35js.mp3',
+          'https://files.catbox.moe/fzrs84.mp3',
+          'https://files.catbox.moe/ou14vt.mp3',
+          'https://files.catbox.moe/8j9reo.mp3',
+          'https://files.catbox.moe/e82qdw.mp3',
+          'https://files.catbox.moe/euegqa.mp3',
+          'https://files.catbox.moe/sr3yic.mp3'
+        ],
+        '战斗': [
+          'https://files.catbox.moe/5r3cvl.mp3',
+          'https://files.catbox.moe/5t4wn7.mp3',
+          'https://files.catbox.moe/fzrs84.mp3',
+          'https://files.catbox.moe/8j9reo.mp3',
+          'https://files.catbox.moe/4abjmg.mp3',
+          'https://files.catbox.moe/ejw1tc.mp3'
+        ],
+        '欢快': [
+          'https://files.catbox.moe/h2m9wn.mp3',
+          'https://files.catbox.moe/4abjmg.mp3',
+          'https://files.catbox.moe/x4ifnv.mp3',
+          'https://files.catbox.moe/uatii4.mp3'
+        ],
+        '悲伤': [
+          'https://files.catbox.moe/ymfvsl.mp3',
+          'https://files.catbox.moe/jju9pf.mp3',
+          'https://files.catbox.moe/wml3pl.mp3',
+          'https://files.catbox.moe/hbha3c.mp3',
+          'https://files.catbox.moe/4abjmg.mp3',
+          'https://files.catbox.moe/duzn5s.mp3'
+        ]
+      },
+      '忘却录音': {
+        '篇章开始': ['https://files.catbox.moe/axkssq.mp3'],
+        '篇章结束': ['https://files.catbox.moe/h4n3o9.mp3'],
+        '空灵': [
+          'https://files.catbox.moe/xqai4k.mp3',
+          'https://files.catbox.moe/zz3nc3.mp3',
+          'https://files.catbox.moe/1b0snx.mp3'
+        ],
+        '沉静': [
+          'https://files.catbox.moe/xqai4k.mp3',
+          'https://files.catbox.moe/zbtzph.mp3',
+          'https://files.catbox.moe/eacpaq.mp3',
+          'https://files.catbox.moe/ou456k.mp3',
+          'https://files.catbox.moe/1b0snx.mp3'
+        ],
+        '日常': [
+          'https://files.catbox.moe/j4j3w4.mp3',
+          'https://files.catbox.moe/zbtzph.mp3',
+          'https://files.catbox.moe/l2man6.mp3',
+          'https://files.catbox.moe/eacpaq.mp3',
+          'https://files.catbox.moe/0uhjz5.mp3',
+          'https://files.catbox.moe/wibcp3.mp3'
+        ],
+        '压抑': [
+          'https://files.catbox.moe/sbkxwi.mp3',
+          'https://files.catbox.moe/0t5lxr.mp3',
+          'https://files.catbox.moe/ou456k.mp3',
+          'https://files.catbox.moe/pofwzj.mp3',
+          'https://files.catbox.moe/p36nvw.mp3'
+        ],
+        '战斗': ['https://files.catbox.moe/ddch7p.mp3'],
+        '欢快': [
+          'https://files.catbox.moe/j4j3w4.mp3',
+          'https://files.catbox.moe/zbtzph.mp3',
+          'https://files.catbox.moe/l2man6.mp3',
+          'https://files.catbox.moe/0uhjz5.mp3',
+          'https://files.catbox.moe/wibcp3.mp3'
+        ],
+        '悲伤': [
+          'https://files.catbox.moe/xqai4k.mp3',
+          'https://files.catbox.moe/ou456k.mp3',
+          'https://files.catbox.moe/zz3nc3.mp3',
+          'https://files.catbox.moe/1b0snx.mp3'
+        ]
+      },
+      '杀人考察后': {
+        '篇章开始': ['https://files.catbox.moe/5ire7b.mp3'],
+        '篇章结束': [
+          'https://files.catbox.moe/z5bjvd.mp3',
+          'https://files.catbox.moe/p2a1dp.mp3'
+        ],
+        '空灵': [
+          'https://files.catbox.moe/fvhxm8.mp3',
+          'https://files.catbox.moe/rqsx7l.mp3',
+          'https://files.catbox.moe/m1r002.mp3',
+          'https://files.catbox.moe/f0b4ts.mp3',
+          'https://files.catbox.moe/moswt7.mp3',
+          'https://files.catbox.moe/ih2yed.mp3',
+          'https://files.catbox.moe/hw28f0.mp3',
+          'https://files.catbox.moe/ia3jzr.mp3',
+          'https://files.catbox.moe/7ifl9z.mp3',
+          'https://files.catbox.moe/2mvcm9.mp3',
+          'https://files.catbox.moe/vtfzry.mp3',
+          'https://files.catbox.moe/8svtlg.mp3'
+        ],
+        '沉静': [
+          'https://files.catbox.moe/apgl9r.mp3',
+          'https://files.catbox.moe/fvhxm8.mp3',
+          'https://files.catbox.moe/rqsx7l.mp3',
+          'https://files.catbox.moe/x8crch.mp3',
+          'https://files.catbox.moe/m439p4.mp3',
+          'https://files.catbox.moe/9zzp6f.mp3',
+          'https://files.catbox.moe/qsj6dm.mp3',
+          'https://files.catbox.moe/hw28f0.mp3',
+          'https://files.catbox.moe/7ifl9z.mp3',
+          'https://files.catbox.moe/vtfzry.mp3',
+          'https://files.catbox.moe/8svtlg.mp3'
+        ],
+        '日常': [
+          'https://files.catbox.moe/8ehmsx.mp3',
+          'https://files.catbox.moe/fvhxm8.mp3',
+          'https://files.catbox.moe/rqsx7l.mp3',
+          'https://files.catbox.moe/x8crch.mp3',
+          'https://files.catbox.moe/m439p4.mp3',
+          'https://files.catbox.moe/1egdo9.mp3',
+          'https://files.catbox.moe/9zzp6f.mp3',
+          'https://files.catbox.moe/76blh8.mp3',
+          'https://files.catbox.moe/hw28f0.mp3',
+          'https://files.catbox.moe/vtfzry.mp3',
+          'https://files.catbox.moe/8svtlg.mp3'
+        ],
+        '压抑': [
+          'https://files.catbox.moe/5ire7b.mp3',
+          'https://files.catbox.moe/8ehmsx.mp3',
+          'https://files.catbox.moe/apgl9r.mp3',
+          'https://files.catbox.moe/f0b4ts.mp3',
+          'https://files.catbox.moe/pqwrjq.mp3',
+          'https://files.catbox.moe/3ywgoz.mp3',
+          'https://files.catbox.moe/fw9va2.mp3',
+          'https://files.catbox.moe/zwkc8v.mp3',
+          'https://files.catbox.moe/ql1np6.mp3',
+          'https://files.catbox.moe/moswt7.mp3',
+          'https://files.catbox.moe/mrkynk.mp3',
+          'https://files.catbox.moe/jvs1gt.mp3',
+          'https://files.catbox.moe/wfx6qu.mp3',
+          'https://files.catbox.moe/4y1clk.mp3',
+          'https://files.catbox.moe/w15cxl.mp3'
+        ],
+        '战斗': [
+          'https://files.catbox.moe/m1r002.mp3',
+          'https://files.catbox.moe/zwkc8v.mp3',
+          'https://files.catbox.moe/ql1np6.mp3',
+          'https://files.catbox.moe/jvs1gt.mp3',
+          'https://files.catbox.moe/510tyv.mp3',
+          'https://files.catbox.moe/ih2yed.mp3',
+          'https://files.catbox.moe/w15cxl.mp3'
+        ],
+        '欢快': [
+          'https://files.catbox.moe/x8crch.mp3',
+          'https://files.catbox.moe/ia3jzr.mp3',
+          'https://files.catbox.moe/7ifl9z.mp3',
+          'https://files.catbox.moe/8svtlg.mp3',
+          'https://files.catbox.moe/vtfzry.mp3'
+        ],
+        '悲伤': [
+          'https://files.catbox.moe/8ehmsx.mp3',
+          'https://files.catbox.moe/9zzp6f.mp3',
+          'https://files.catbox.moe/axy621.mp3',
+          'https://files.catbox.moe/qsj6dm.mp3',
+          'https://files.catbox.moe/ih2yed.mp3',
+          'https://files.catbox.moe/t8epcj.mp3',
+          'https://files.catbox.moe/76blh8.mp3',
+          'https://files.catbox.moe/hw28f0.mp3',
+          'https://files.catbox.moe/7ifl9z.mp3',
+          'https://files.catbox.moe/pcd9wb.mp3',
+          'https://files.catbox.moe/2mvcm9.mp3'
+        ]
+      }
+    };
+
+    /* 兼容“迦蓝之洞”写法 */
+    MUSIC_DATABASE['迦蓝之洞'] = MUSIC_DATABASE['伽蓝之洞'];
+
+    /* 默认音频回退 */
+    const DEFAULT_AUDIO_SRC = 'https://files.catbox.moe/92ihge.mp3';
+
+    /* 角色立绘与头像映射字典 */
+    const CHARACTER_ASSETS = {
+      '两仪式': {
+        avatar: 'https://files.catbox.moe/kltou6.jpg',
+        portraits: [
+          'https://files.catbox.moe/cyschi.jpg',
+          'https://files.catbox.moe/z45lbh.jpg',
+          'https://files.catbox.moe/xvfx4n.jpg',
+          'https://files.catbox.moe/h4s71s.jpg',
+          'https://files.catbox.moe/tncmyu.jpg',
+          'https://files.catbox.moe/dg1wjf.jpg',
+          'https://files.catbox.moe/l5h1y8.jpg',
+          'https://files.catbox.moe/v9vq7t.jpg',
+          'https://files.catbox.moe/ub7l1g.jpg',
+          'https://files.catbox.moe/uvw1ix.jpg',
+          'https://files.catbox.moe/x49jc5.jpg',
+          'https://files.catbox.moe/blorq4.jpg',
+          'https://files.catbox.moe/pqrfs0.jpg',
+          'https://files.catbox.moe/7r9wgi.jpg',
+          'https://files.catbox.moe/ns48om.jpg',
+          'https://files.catbox.moe/xqh2ow.jpg',
+          'https://files.catbox.moe/34fpgb.jpg',
+          'https://files.catbox.moe/ik7jep.jpg',
+          'https://files.catbox.moe/k60p5o.jpg',
+          'https://files.catbox.moe/6ux0n2.jpg',
+          'https://files.catbox.moe/4fk5jr.jpg',
+          'https://files.catbox.moe/y7dfms.jpg',
+          'https://files.catbox.moe/iytyah.jpg',
+          'https://files.catbox.moe/0bjc9f.jpg',
+          'https://files.catbox.moe/lbd677.jpg'
+        ]
+      },
+      '苍崎橙子': {
+        avatar: 'https://files.catbox.moe/9sgthb.jpg',
+        portraits: [
+          'https://files.catbox.moe/2zhu95.jpg',
+          'https://files.catbox.moe/qamn07.jpg',
+          'https://files.catbox.moe/o5sx3p.png',
+          'https://files.catbox.moe/bccj58.jpg',
+          'https://files.catbox.moe/523w0n.jpg',
+          'https://files.catbox.moe/6t3m9p.jpg',
+          'https://files.catbox.moe/k1t0ms.jpg'
+        ]
+      },
+      '两仪织': { avatar: '', portraits: [] },
+      '浅上藤乃': { avatar: '', portraits: [] },
+      '巫条雾绘': { avatar: '', portraits: [] },
+      '荒耶宗莲': { avatar: '', portraits: [] },
+      '玄雾皋月': { avatar: '', portraits: [] },
+      '白纯里绪': { avatar: '', portraits: [] },
+      '瓶仓光溜': { avatar: '', portraits: [] }
+    };
+
+    let audioElement = null;
+    let currentPlayingSrc = null;
+    let currentActiveChapter = '杀人考察前';
+    let currentActiveAtmosphere = '篇章开始';
+
+    /* 获取匹配的音乐链接（当篇章为“日常”时，合并全部篇章在当前氛围下的歌曲库进行随机抽取） */
+    function getMatchedAudioSrc(chapter, atmosphere, excludeSrc = null) {
+      let pool = [];
+
+      if (chapter === '日常') {
+        /* 合并全部篇章在该氛围下的所有歌曲 */
+        const visitedUrls = new Set();
+        Object.keys(MUSIC_DATABASE).forEach(chapKey => {
+          if (chapKey === '迦蓝之洞') return; /* 避免别名重复合并 */
+          const chapObj = MUSIC_DATABASE[chapKey];
+          if (chapObj && chapObj[atmosphere] && Array.isArray(chapObj[atmosphere])) {
+            chapObj[atmosphere].forEach(url => {
+              if (url && !visitedUrls.has(url)) {
+                visitedUrls.add(url);
+                pool.push(url);
+              }
+            });
+          }
+        });
+        /* 若当前氛围在各篇章均无歌曲，则合并所有篇章的“日常”氛围歌曲作为兜底 */
+        if (pool.length === 0) {
+          Object.keys(MUSIC_DATABASE).forEach(chapKey => {
+            if (chapKey === '迦蓝之洞') return;
+            const chapObj = MUSIC_DATABASE[chapKey];
+            if (chapObj && chapObj['日常'] && Array.isArray(chapObj['日常'])) {
+              chapObj['日常'].forEach(url => {
+                if (url && !visitedUrls.has(url)) {
+                  visitedUrls.add(url);
+                  pool.push(url);
+                }
+              });
+            }
+          });
+        }
+      } else {
+        const chapterList = MUSIC_DATABASE[chapter] || MUSIC_DATABASE['杀人考察前'];
+        if (chapterList && chapterList[atmosphere] && chapterList[atmosphere].length > 0) {
+          pool = chapterList[atmosphere];
+        } else if (chapterList && chapterList['日常'] && chapterList['日常'].length > 0) {
+          pool = chapterList['日常'];
+        }
+      }
+
+      if (pool.length === 0) return DEFAULT_AUDIO_SRC;
+      if (pool.length === 1) return pool[0];
+
+      let filtered = excludeSrc ? pool.filter(src => src !== excludeSrc) : pool;
+      if (filtered.length === 0) filtered = pool;
+
+      return filtered[Math.floor(Math.random() * filtered.length)];
+    }
+
+    /* 获取匹配的原著氛围附言 */
+    function getMatchedSubtext(chapter, atmosphere) {
+      const chapterQuotes = ATMOSPHERE_QUOTES[chapter] || ATMOSPHERE_QUOTES['日常'] || {};
+      const atmosphereQuotes = chapterQuotes[atmosphere] || chapterQuotes['日常'] || ['……'];
+      if (Array.isArray(atmosphereQuotes) && atmosphereQuotes.length > 0) {
+        return atmosphereQuotes[Math.floor(Math.random() * atmosphereQuotes.length)];
+      }
+      return typeof atmosphereQuotes === 'string' ? atmosphereQuotes : '……';
+    }
+
+    /* 播放音频辅助函数 */
+    function playAudioSafe() {
+      if (!audioElement || !currentPlayingSrc) return;
+      audioElement.play().then(() => {
+        $('#vinyl-disc-body').addClass('playing');
+        $('#btn-play-trigger').html('<svg viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>');
+      }).catch(() => {
+        $('#vinyl-disc-body').removeClass('playing');
+        $('#btn-play-trigger').html('<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>');
+      });
+    }
+
+    /* 更新唱片封面、篇章氛围随动名句与音频源并自动播放 */
+    function updateMusicPlayer(chapter, atmosphere, autoPlay = true) {
+      currentActiveChapter = chapter;
+      currentActiveAtmosphere = atmosphere;
+
+      /* 更新唱片中心封面样式（若为“日常”则从其他篇章封面库中随机抽取） */
+      let coverStyle = '';
+      if (chapter === '日常') {
+        const randomIndex = Math.floor(Math.random() * OTHER_CHAPTER_COVER_URLS.length);
+        coverStyle = OTHER_CHAPTER_COVER_URLS[randomIndex];
+      } else {
+        coverStyle = CHAPTER_COVERS[chapter] || CHAPTER_COVERS['杀人考察前'];
+      }
+
+      const coverElement = $('#vinyl-cover-disc');
+      if (coverStyle && (coverStyle.startsWith('http') || coverStyle.startsWith('data:'))) {
+        coverElement.css({ 'background-image': `url("${coverStyle}")`, 'background-color': 'transparent' });
+      } else {
+        coverElement.css({ 'background-image': 'none', 'background': coverStyle || 'linear-gradient(135deg, #443c52, #8c7ea8)' });
+      }
+
+      /* 更新篇章与氛围随动的奈须蘑菇原著语句，并根据字数自动适配缩放字号 */
+      const subtext = getMatchedSubtext(chapter, atmosphere);
+      const subtextEl = $('#chapter-subtext-display');
+      subtextEl.text(subtext).attr('title', subtext);
+
+      /* 字数较多时缩小字号，确保在两行内展示优美完整 */
+      if (subtext.length > 36) {
+        subtextEl.css('font-size', '9.5px');
+      } else if (subtext.length > 22) {
+        subtextEl.css('font-size', '10.5px');
+      } else {
+        subtextEl.css('font-size', '11px');
+      }
+
+      /* 匹配并就绪音乐源 */
+      const targetSrc = getMatchedAudioSrc(chapter, atmosphere);
+
+      if (currentPlayingSrc !== targetSrc) {
+        currentPlayingSrc = targetSrc;
+        if (audioElement) {
+          audioElement.src = targetSrc;
+          $('#player-progress-fill').css('width', '0%');
+          if (autoPlay) {
+            playAudioSafe();
+          }
+        }
+      } else if (autoPlay && audioElement && audioElement.paused) {
+        playAudioSafe();
+      }
+    }
+
+    /* 规范化获取插图列表数组 */
+    function getPortraitList(charName) {
+      const assets = CHARACTER_ASSETS[charName] || {};
+      if (Array.isArray(assets.portraits)) {
+        return assets.portraits.filter(url => Boolean(url && url.trim()));
+      }
+      if (typeof assets.portraits === 'string' && assets.portraits.trim()) {
+        return [assets.portraits.trim()];
+      }
+      if (typeof assets.portrait === 'string' && assets.portrait.trim()) {
+        return [assets.portrait.trim()];
+      }
+      return [];
+    }
+
+    /* 填充数据逻辑 */
+    function populateCharacterData() {
+      const all_variables = getAllVariables();
+
+      /* 读取世界信息 */
+      const currentTime = _.get(all_variables, 'stat_data.世界.当前时间', '1995年03月21日 22:00');
+      const currentChapter = _.get(all_variables, 'stat_data.世界.当前篇章', '杀人考察前');
+      const currentAtmosphere = _.get(all_variables, 'stat_data.世界.当前氛围', '篇章开始');
+
+      $('#world-time-val').text(currentTime);
+      $('#world-chapter-val').text(currentChapter);
+
+      /* 更新左侧栏篇章海报 */
+      const posterUrl = CHAPTER_POSTERS[currentChapter] || '';
+      if (posterUrl) {
+        $('#chapter-poster-container').html(`<img src="${posterUrl}" class="poster-img" alt="${currentChapter}海报">`);
+      } else {
+        $('#chapter-poster-container').html(`<div class="poster-fallback">〔 ${currentChapter} · 暂无海报 〕</div>`);
+      }
+
+      /* 更新右侧栏唱片封面、原著氛围语句与音律并自动播放 */
+      updateMusicPlayer(currentChapter, currentAtmosphere, true);
+
+      /* 读取出场角色列表 */
+      const presentCharacters = _.get(all_variables, 'stat_data.出场角色', {});
+      const charListContainer = $('#character-list-container');
+
+      const charEntries = Object.entries(presentCharacters);
+
+      if (charEntries.length === 0) {
+        charListContainer.html('<div class="empty-placeholder">暂无出场人物记录</div>');
+        return;
+      }
+
+      let htmlBuffer = '';
+
+      charEntries.forEach(([charName, charInfo]) => {
+        const favor = _.get(charInfo, '好感度', 0);
+        const outfit = _.get(charInfo, '衣着', '未记录');
+        const mind = _.get(charInfo, '心声', '无明显波澜');
+
+        /* 获取头像与插图列表 */
+        const assets = CHARACTER_ASSETS[charName] || {};
+        const avatarUrl = assets.avatar || '';
+        const portraitList = getPortraitList(charName);
+
+        const avatarHtml = avatarUrl
+          ? `<img src="${avatarUrl}" class="char-avatar-img" alt="${charName}">`
+          : `<span class="char-avatar-fallback">${charName.charAt(0)}</span>`;
+
+        /* 生成插图DOM：每次渲染时随机选择一张初始图片 */
+        let portraitGalleryHtml = '';
+        if (portraitList.length === 0) {
+          portraitGalleryHtml = `
+            <div class="portrait-box">
+              <div class="portrait-empty">[ ${charName} · 暂无插页数据 ]</div>
+            </div>
+          `;
+        } else {
+          const initialRandomIndex = Math.floor(Math.random() * portraitList.length);
+          const initialImgUrl = portraitList[initialRandomIndex];
+
+          portraitGalleryHtml = `
+            <div class="portrait-gallery-wrap" data-portraits='${JSON.stringify(portraitList)}' data-current-index="${initialRandomIndex}">
+              <div class="portrait-box" title="点击随机切换插图">
+                <img src="${initialImgUrl}" class="portrait-img" alt="${charName}插页">
+              </div>
+            </div>
+          `;
+        }
+
+        htmlBuffer += `
+          <div class="char-card" data-char-name="${charName}">
+            <div class="char-header">
+              <div class="char-avatar-box">
+                ${avatarHtml}
+              </div>
+              <div class="char-basic-info">
+                <div class="char-name-row">
+                  <span class="char-name">${charName}</span>
+                  <span class="char-fav-text">羁绊 ${favor}</span>
+                </div>
+              </div>
+              <span class="char-toggle-icon">▼</span>
+            </div>
+            <div class="char-details">
+              <div class="detail-item">
+                <div class="detail-label">当前装束</div>
+                <div class="detail-content">${outfit}</div>
+              </div>
+              <div class="detail-item">
+                <div class="detail-label">即时心象</div>
+                <div class="detail-content heart-voice">${mind}</div>
+              </div>
+              <div class="detail-item">
+                ${portraitGalleryHtml}
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      charListContainer.html(htmlBuffer);
+
+      /* 重新绑定展开折叠事件 */
+      $('.char-header').off('click').on('click', function () {
+        const card = $(this).closest('.char-card');
+        card.toggleClass('open');
+      });
+
+      /* 绑定点击插图框本身渐隐渐出随机切换下一张事件 */
+      $('.portrait-box').off('click').on('click', function (e) {
+        e.stopPropagation();
+        const box = $(this);
+        const galleryWrap = box.closest('.portrait-gallery-wrap');
+        const portraitsData = galleryWrap.data('portraits');
+
+        if (!Array.isArray(portraitsData) || portraitsData.length <= 1) return;
+
+        const imgEl = box.find('.portrait-img');
+        if (imgEl.hasClass('fading-out')) return;
+
+        let currentIndex = parseInt(galleryWrap.attr('data-current-index'), 10);
+        if (isNaN(currentIndex)) {
+          currentIndex = 0;
+        }
+
+        /* 随机挑选一张与当前不同的插图 */
+        let nextIndex = currentIndex;
+        while (nextIndex === currentIndex && portraitsData.length > 1) {
+          nextIndex = Math.floor(Math.random() * portraitsData.length);
+        }
+
+        /* 执行渐隐渐出动画过渡 */
+        imgEl.addClass('fading-out');
+
+        setTimeout(() => {
+          galleryWrap.attr('data-current-index', nextIndex);
+          const nextSrc = portraitsData[nextIndex];
+
+          const tempImg = new Image();
+          tempImg.onload = function () {
+            imgEl.attr('src', nextSrc);
+            imgEl.removeClass('fading-out');
+          };
+          tempImg.onerror = function () {
+            imgEl.attr('src', nextSrc);
+            imgEl.removeClass('fading-out');
+          };
+          tempImg.src = nextSrc;
+        }, 250);
+      });
+    }
+
+    /* 播放控制切换 */
+    function togglePlay() {
+      if (!audioElement) return;
+      if (!currentPlayingSrc) return;
+
+      if (audioElement.paused) {
+        playAudioSafe();
+      } else {
+        audioElement.pause();
+        $('#vinyl-disc-body').removeClass('playing');
+        $('#btn-play-trigger').html('<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>');
+      }
+    }
+
+    /* 初始化逻辑 */
+    async function init() {
+      await waitGlobalInitialized('Mvu');
+
+      audioElement = document.getElementById('kknj-bgm-player');
+
+      /* 读取本地记忆的音量，若无则默认为 0.05 (5%) */
+      let savedVolume = 0.05;
+      try {
+        const localVal = localStorage.getItem('kknj_saved_volume');
+        if (localVal !== null) {
+          const parsed = parseFloat(localVal);
+          if (!isNaN(parsed) && parsed >= 0 && parsed <= 1) {
+            savedVolume = parsed;
+          }
+        }
+      } catch (e) {
+        /* 忽略存储受限异常 */
+      }
+
+      /* 初始化音量与滑块 */
+      if (audioElement) {
+        audioElement.volume = savedVolume;
+      }
+      $('#volume-range-input').val(savedVolume);
+
+      /* 音量滑块监听并持久化保存 */
+      $('#volume-range-input').on('input change', function () {
+        const val = parseFloat($(this).val());
+        if (audioElement) {
+          audioElement.volume = val;
+        }
+        try {
+          localStorage.setItem('kknj_saved_volume', val.toString());
+        } catch (e) {
+          /* 忽略存储受限异常 */
+        }
+      });
+
+      /* 监听播放进度同步进度条与完结后自动切换下一首 */
+      if (audioElement) {
+        audioElement.addEventListener('timeupdate', () => {
+          if (audioElement.duration) {
+            const percent = (audioElement.currentTime / audioElement.duration) * 100;
+            $('#player-progress-fill').css('width', percent + '%');
+          }
+        });
+
+        /* 播放完本首后，自动随机抽取并播放同一条件下的下一首 */
+        audioElement.addEventListener('ended', () => {
+          const nextSrc = getMatchedAudioSrc(currentActiveChapter, currentActiveAtmosphere, currentPlayingSrc);
+          currentPlayingSrc = nextSrc;
+          audioElement.src = nextSrc;
+          $('#player-progress-fill').css('width', '0%');
+          playAudioSafe();
+        });
+      }
+
+      /* 点击唱片或播放图标均可触发切换 */
+      $('#vinyl-disc-box').on('click', togglePlay);
+      $('#btn-play-trigger').on('click', togglePlay);
+
+      /* 点击进度条快进/跳转 */
+      $('#player-progress-bar').on('click', function (e) {
+        if (!audioElement || !audioElement.duration) return;
+        const rect = this.getBoundingClientRect();
+        const clickPos = (e.clientX - rect.left) / rect.width;
+        audioElement.currentTime = clickPos * audioElement.duration;
+      });
+
+      /* 绑定左侧篇章海报折叠与展开交互 */
+      $('#btn-collapse-left-action').on('click', function () {
+        $('#kknj-main-layout').addClass('left-collapsed');
+      });
+
+      $('#btn-expand-left-action').on('click', function () {
+        $('#kknj-main-layout').removeClass('left-collapsed');
+      });
+
+      /* 初始载入变量 */
+      populateCharacterData();
+
+      /* 监听变量更新事件自动刷新 */
+      eventOn(Mvu.events.VARIABLE_UPDATE_ENDED, () => {
+        populateCharacterData();
+      });
+    }
+
+    $(errorCatched(init));
+  </script>
+</head>
+<body>
+  <div class="kknj-container">
+    <!-- 顶部书脊标识条 -->
+    <div class="spine-header-strip">
+      <div class="spine-brand">
+        <span class="spine-logo">空</span>
+        <span class="spine-title-main">空の境界</span>
+      </div>
+      <span class="spine-mark">講談社文庫 // RECORD</span>
+    </div>
+
+    <!-- 世界时间顶部指示条 -->
+    <div class="world-header-bar">
+      <span class="time-title">KARA NO KYOUKAI // TIMELINE</span>
+      <span id="world-time-val" class="time-val">1995年03月21日 22:00</span>
+    </div>
+
+    <!-- PC端双栏核心布局容器 -->
+    <div id="kknj-main-layout" class="main-columns-layout">
+      <!-- 左侧栏：当前篇章在上，海报在下 -->
+      <div class="left-column">
+        <div class="chapter-badge-box">
+          <div class="badge-text-group">
+            <span class="meta-label">当前篇章</span>
+            <span id="world-chapter-val" class="meta-value">杀人考察前</span>
+          </div>
+          <button type="button" id="btn-collapse-left-action" class="btn-collapse-left" title="折叠左侧海报栏">
+            <svg class="ui-icon-svg" viewBox="0 0 24 24"><path d="M15.41 16.59L10.83 12l4.58-4.59L14 6l-6 6 6 6 1.41-1.41z"/></svg>
+            <span>收起</span>
+          </button>
+        </div>
+        <div id="chapter-poster-container" class="poster-box">
+          <!-- 动态载入篇章海报 -->
+        </div>
+      </div>
+
+      <!-- 右侧栏：黑胶音乐在上，登场人物在下 -->
+      <div class="right-column">
+        <!-- 折叠后显示的展开浮标 -->
+        <button type="button" id="btn-expand-left-action" class="btn-expand-left" title="展开篇章海报">
+          <svg class="ui-icon-svg" viewBox="0 0 24 24"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6-1.41-1.41z"/></svg>
+          <span>展开篇章海报</span>
+        </button>
+
+        <div class="player-card">
+          <div id="vinyl-disc-box" class="vinyl-box" title="点击播放/暂停">
+            <div id="vinyl-disc-body" class="vinyl-disc">
+              <div id="vinyl-cover-disc" class="vinyl-cover">
+                <div class="vinyl-center-hole"></div>
+              </div>
+            </div>
+          </div>
+          <div class="player-track-wrap">
+            <div id="player-progress-bar" class="progress-bar-bg" title="点击跳转进度">
+              <div id="player-progress-fill" class="progress-bar-fill"></div>
+            </div>
+            <div class="player-action-row">
+              <div class="action-left-group">
+                <button type="button" id="btn-play-trigger" class="btn-play-icon" title="播放/暂停">
+                  <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+                </button>
+                <span id="chapter-subtext-display" class="chapter-subtext">...</span>
+              </div>
+              <div class="volume-ctrl-group" title="调节音量">
+                <span class="volume-icon">♪</span>
+                <input type="range" id="volume-range-input" class="volume-slider" min="0" max="1" step="0.01" value="0.05">
+              </div>
+            </div>
+          </div>
+          <audio id="kknj-bgm-player" preload="none"></audio>
+        </div>
+
+        <div class="characters-section">
+          <div class="section-title">
+            <span>登场人物目录</span>
+            <span style="font-size: 10px; color: #8c839b;">PERSONNEL</span>
+          </div>
+          <div id="character-list-container" class="char-list">
+            <!-- 动态生成角色卡 -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
