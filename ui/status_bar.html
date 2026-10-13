@@ -1761,58 +1761,56 @@
     /* 默认音频回退 */
     const DEFAULT_AUDIO_SRC = 'https://files.catbox.moe/92ihge.mp3';
 
-    /* 角色立绘与头像映射字典 */
-    const CHARACTER_ASSETS = {
-      '两仪式': {
-        avatar: 'https://files.catbox.moe/kltou6.jpg',
-        portraits: [
-          'https://files.catbox.moe/cyschi.jpg',
-          'https://files.catbox.moe/z45lbh.jpg',
-          'https://files.catbox.moe/xvfx4n.jpg',
-          'https://files.catbox.moe/h4s71s.jpg',
-          'https://files.catbox.moe/tncmyu.jpg',
-          'https://files.catbox.moe/dg1wjf.jpg',
-          'https://files.catbox.moe/l5h1y8.jpg',
-          'https://files.catbox.moe/v9vq7t.jpg',
-          'https://files.catbox.moe/ub7l1g.jpg',
-          'https://files.catbox.moe/uvw1ix.jpg',
-          'https://files.catbox.moe/x49jc5.jpg',
-          'https://files.catbox.moe/blorq4.jpg',
-          'https://files.catbox.moe/pqrfs0.jpg',
-          'https://files.catbox.moe/7r9wgi.jpg',
-          'https://files.catbox.moe/ns48om.jpg',
-          'https://files.catbox.moe/xqh2ow.jpg',
-          'https://files.catbox.moe/34fpgb.jpg',
-          'https://files.catbox.moe/ik7jep.jpg',
-          'https://files.catbox.moe/k60p5o.jpg',
-          'https://files.catbox.moe/6ux0n2.jpg',
-          'https://files.catbox.moe/4fk5jr.jpg',
-          'https://files.catbox.moe/y7dfms.jpg',
-          'https://files.catbox.moe/iytyah.jpg',
-          'https://files.catbox.moe/0bjc9f.jpg',
-          'https://files.catbox.moe/lbd677.jpg'
-        ]
-      },
-      '苍崎橙子': {
-        avatar: 'https://files.catbox.moe/9sgthb.jpg',
-        portraits: [
-          'https://files.catbox.moe/2zhu95.jpg',
-          'https://files.catbox.moe/qamn07.jpg',
-          'https://files.catbox.moe/o5sx3p.png',
-          'https://files.catbox.moe/bccj58.jpg',
-          'https://files.catbox.moe/523w0n.jpg',
-          'https://files.catbox.moe/6t3m9p.jpg',
-          'https://files.catbox.moe/k1t0ms.jpg'
-        ]
-      },
-      '两仪织': { avatar: '', portraits: [] },
-      '浅上藤乃': { avatar: '', portraits: [] },
-      '巫条雾绘': { avatar: '', portraits: [] },
-      '荒耶宗莲': { avatar: '', portraits: [] },
-      '玄雾皋月': { avatar: '', portraits: [] },
-      '白纯里绪': { avatar: '', portraits: [] },
-      '瓶仓光溜': { avatar: '', portraits: [] }
-    };
+    /* ========================================================
+     * 【角色资产与盲扫探测引擎】
+     * 托管仓库: kuroneko0514/Kara-no-kyoukai
+     * 加速镜像: jsDelivr CDN
+     * ======================================================== */
+    const CDN_PORTRAITS_BASE = 'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/立绘';
+
+    /* 全局立绘内存缓存池（避免重复盲扫产生冗余网络请求） */
+    window._KKNJ_PORTRAIT_CACHE = window._KKNJ_PORTRAIT_CACHE || {};
+
+    /* 轻量图片连通性探测 */
+    function checkImageExists(url) {
+      return new Promise((resolve) => {
+        const img = new Image();
+        img.onload = () => resolve(true);
+        img.onerror = () => resolve(false);
+        img.src = url;
+      });
+    }
+
+    /* 盲扫获取指定角色的所有可用连续立绘 (1.jpg, 2.jpg ...) */
+    async function probeCharacterPortraits(charName) {
+      if (window._KKNJ_PORTRAIT_CACHE[charName] && window._KKNJ_PORTRAIT_CACHE[charName].length > 0) {
+        return window._KKNJ_PORTRAIT_CACHE[charName];
+      }
+
+      const charEncoded = encodeURIComponent(charName);
+      const baseUrl = `${CDN_PORTRAITS_BASE}/${charEncoded}`;
+      const validImages = [];
+      let index = 1;
+
+      while (true) {
+        const testUrl = `${baseUrl}/${index}.jpg`;
+        const exists = await checkImageExists(testUrl);
+        if (!exists) {
+          break;
+        }
+        validImages.push(testUrl);
+        index++;
+      }
+
+      window._KKNJ_PORTRAIT_CACHE[charName] = validImages;
+      return validImages;
+    }
+
+    /* 同步获取角色头像 URL */
+    function getCharacterAvatarUrl(charName) {
+      const charEncoded = encodeURIComponent(charName);
+      return `${CDN_PORTRAITS_BASE}/${charEncoded}/头像.jpg`;
+    }
 
     let audioElement = null;
     let currentPlayingSrc = null;
@@ -2001,35 +1999,51 @@
         const outfit = _.get(charInfo, '衣着', '未记录');
         const mind = _.get(charInfo, '心声', '无明显波澜');
 
-        /* 获取头像与插图列表 */
-        const assets = CHARACTER_ASSETS[charName] || {};
-        const avatarUrl = assets.avatar || '';
-        const portraitList = getPortraitList(charName);
+        /* 获取头像与立绘 */
+        const avatarUrl = getCharacterAvatarUrl(charName);
+        const fallbackInitial = charName.charAt(0);
 
-        const avatarHtml = avatarUrl
-          ? `<img src="${avatarUrl}" class="char-avatar-img" alt="${charName}">`
-          : `<span class="char-avatar-fallback">${charName.charAt(0)}</span>`;
+        const avatarHtml = `
+          <img src="${avatarUrl}" class="char-avatar-img" alt="${charName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <span class="char-avatar-fallback" style="display:none;">${fallbackInitial}</span>
+        `;
 
-        /* 生成插图DOM：每次渲染时随机选择一张初始图片 */
-        let portraitGalleryHtml = '';
-        if (portraitList.length === 0) {
-          portraitGalleryHtml = `
-            <div class="portrait-box">
-              <div class="portrait-empty">[ ${charName} · 暂无插页数据 ]</div>
-            </div>
-          `;
+        /* 生成立绘容器 (支持首屏秒开 + 盲扫异步装配 + 点击随机轮播) */
+        const cachedPortraits = window._KKNJ_PORTRAIT_CACHE[charName];
+        let initialImgSrc = '';
+        let initialDataJson = '[]';
+
+        if (cachedPortraits && cachedPortraits.length > 0) {
+          const randIdx = Math.floor(Math.random() * cachedPortraits.length);
+          initialImgSrc = cachedPortraits[randIdx];
+          initialDataJson = JSON.stringify(cachedPortraits);
         } else {
-          const initialRandomIndex = Math.floor(Math.random() * portraitList.length);
-          const initialImgUrl = portraitList[initialRandomIndex];
-
-          portraitGalleryHtml = `
-            <div class="portrait-gallery-wrap" data-portraits='${JSON.stringify(portraitList)}' data-current-index="${initialRandomIndex}">
-              <div class="portrait-box" title="点击随机切换插图">
-                <img src="${initialImgUrl}" class="portrait-img" alt="${charName}插页">
-              </div>
-            </div>
-          `;
+          const charEncoded = encodeURIComponent(charName);
+          initialImgSrc = `${CDN_PORTRAITS_BASE}/${charEncoded}/1.jpg`;
+          initialDataJson = JSON.stringify([initialImgSrc]);
         }
+
+        const portraitGalleryHtml = `
+          <div class="portrait-gallery-wrap" data-char-name="${charName}" data-portraits='${initialDataJson}' data-current-index="0">
+            <div class="portrait-box" title="点击随机切换插图">
+              <img src="${initialImgSrc}" class="portrait-img" alt="${charName}插页" onerror="this.closest('.portrait-box').innerHTML='<div class=\'portrait-empty\'>[ ${charName} · 暂无插页数据 ]</div>';">
+            </div>
+          </div>
+        `;
+
+        /* 异步盲扫填充完整立绘池并赋能轮播 */
+        probeCharacterPortraits(charName).then((list) => {
+          if (list && list.length > 0) {
+            const wrap = $(`.portrait-gallery-wrap[data-char-name="${charName}"]`);
+            if (wrap.length) {
+              wrap.attr('data-portraits', JSON.stringify(list));
+              const img = wrap.find('.portrait-img');
+              if (img.length === 0) {
+                wrap.find('.portrait-box').html(`<img src="${list[0]}" class="portrait-img" alt="${charName}插页">`);
+              }
+            }
+          }
+        });
 
         htmlBuffer += `
           <div class="char-card" data-char-name="${charName}">
