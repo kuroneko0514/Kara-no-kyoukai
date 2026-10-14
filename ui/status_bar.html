@@ -8,7 +8,7 @@
 /* 引入文鼎体网络字体 */
     @font-face {
       font-family: 'WenDing';
-      src: url('https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6i7ujh.ttf') format('truetype');
+      src: url('https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/字体/WenDing.ttf') format('truetype');
       font-weight: normal;
       font-style: normal;
       font-display: swap;
@@ -1317,535 +1317,538 @@
       }
     };
 
-    /* 音乐数据库完整配置 */
+    const BGM_BASE = 'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐';
+
+    /* 音乐数据库完整配置（原作者本地章节与氛围结构直调版） */
     const MUSIC_DATABASE = {
-      '杀人考察前': {
-        '篇章开始': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/92ihge.mp3'],
-        '篇章结束': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/sdwqmy.mp3'],
-        '空灵': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/92ihge.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/cal8w5.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/r8kn7w.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6h1eh4.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/xch1x2.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/zg0qo2.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/z9jk4p.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6j6rx3.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/layx05.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/cppf9m.mp3'
-        ],
-        '沉静': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/92ihge.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/cal8w5.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/gowrfo.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/r8kn7w.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/o1aqsq.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/xch1x2.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/z9jk4p.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6j6rx3.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/cppf9m.mp3'
-        ],
-        '日常': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/92ihge.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/gowrfo.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6bjg4u.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6h1eh4.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/x6x2p3.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/o1aqsq.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/i7b95p.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6j6rx3.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/2mcr2n.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8ed8fo.mp3'
-        ],
+      '俯瞰风景': {
         '压抑': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/s2j4wx.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ir42cm.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/558yee.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/nnhnj5.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ph47bn.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/nw9z3e.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ev8zge.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/v9zd7e.mp3'
+          `${BGM_BASE}/俯瞰风景/压抑/M03a+b.mp3`,
+          `${BGM_BASE}/俯瞰风景/压抑/M07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/俯瞰风景/压抑/M08a - 梶浦由記.mp3`,
+          `${BGM_BASE}/俯瞰风景/压抑/M08b.mp3`,
+          `${BGM_BASE}/俯瞰风景/压抑/M11.mp3`,
+          `${BGM_BASE}/俯瞰风景/压抑/M14.mp3`,
+          `${BGM_BASE}/俯瞰风景/压抑/M15.mp3`
+        ],
+        '悲伤': [
+          `${BGM_BASE}/俯瞰风景/悲伤/M05.mp3`,
+          `${BGM_BASE}/俯瞰风景/悲伤/M16.mp3`,
+          `${BGM_BASE}/俯瞰风景/悲伤/M17.mp3`,
+          `${BGM_BASE}/俯瞰风景/悲伤/M18.mp3`
         ],
         '战斗': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ir42cm.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/nw9z3e.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ev8zge.mp3'
+          `${BGM_BASE}/俯瞰风景/战斗/M07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/俯瞰风景/战斗/M08a - 梶浦由記.mp3`,
+          `${BGM_BASE}/俯瞰风景/战斗/M08b.mp3`,
+          `${BGM_BASE}/俯瞰风景/战斗/M11.mp3`,
+          `${BGM_BASE}/俯瞰风景/战斗/M12+13.mp3`,
+          `${BGM_BASE}/俯瞰风景/战斗/M15.mp3`
+        ],
+        '日常': [
+          `${BGM_BASE}/俯瞰风景/日常/M09.mp3`,
+          `${BGM_BASE}/俯瞰风景/日常/M17.mp3`,
+          `${BGM_BASE}/俯瞰风景/日常/M18.mp3`,
+          `${BGM_BASE}/俯瞰风景/日常/Thanatos (俯瞰風景).mp3`
+        ],
+        '欢快': [`${BGM_BASE}/俯瞰风景/欢快/M04.mp3`],
+        '沉静': [
+          `${BGM_BASE}/俯瞰风景/沉静/M02.mp3`,
+          `${BGM_BASE}/俯瞰风景/沉静/M04.mp3`,
+          `${BGM_BASE}/俯瞰风景/沉静/M08c.mp3`,
+          `${BGM_BASE}/俯瞰风景/沉静/M09.mp3`,
+          `${BGM_BASE}/俯瞰风景/沉静/M16.mp3`,
+          `${BGM_BASE}/俯瞰风景/沉静/M17.mp3`,
+          `${BGM_BASE}/俯瞰风景/沉静/M18.mp3`,
+          `${BGM_BASE}/俯瞰风景/沉静/in the garden of sinners - 梶浦由記.mp3`
+        ],
+        '空灵': [
+          `${BGM_BASE}/俯瞰风景/空灵/M02.mp3`,
+          `${BGM_BASE}/俯瞰风景/空灵/M03a+b.mp3`,
+          `${BGM_BASE}/俯瞰风景/空灵/M04.mp3`,
+          `${BGM_BASE}/俯瞰风景/空灵/M05.mp3`,
+          `${BGM_BASE}/俯瞰风景/空灵/M08b.mp3`,
+          `${BGM_BASE}/俯瞰风景/空灵/M08c.mp3`,
+          `${BGM_BASE}/俯瞰风景/空灵/M14.mp3`,
+          `${BGM_BASE}/俯瞰风景/空灵/M15.mp3`,
+          `${BGM_BASE}/俯瞰风景/空灵/M17.mp3`,
+          `${BGM_BASE}/俯瞰风景/空灵/M18.mp3`,
+          `${BGM_BASE}/俯瞰风景/空灵/in the garden of sinners - 梶浦由記.mp3`
+        ],
+        '篇章开始': [`${BGM_BASE}/俯瞰风景/篇章开始/M01.mp3`],
+        '篇章结束': []
+      },
+      '杀人考察前': {
+        '压抑': [
+          `${BGM_BASE}/杀人考察前/压抑/M03 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/压抑/M06 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/压抑/M08 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/压抑/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/压抑/M15 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/压抑/M16 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/压抑/M20 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/压抑/M23 - 梶浦由記.mp3`
+        ],
+        '悲伤': [
+          `${BGM_BASE}/杀人考察前/悲伤/M14 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/悲伤/M18 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/悲伤/M19 - 梶浦由記.mp3`
+        ],
+        '战斗': [
+          `${BGM_BASE}/杀人考察前/战斗/M06 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/战斗/M16 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/战斗/M20 - 梶浦由記.mp3`
+        ],
+        '日常': [
+          `${BGM_BASE}/杀人考察前/日常/EXTRA - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/日常/II quiet romance (杀人考察(前)) - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/日常/III rain goes up (杀人考察(前)) - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/日常/M01 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/日常/M04 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/日常/M07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/日常/M10 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/日常/M11 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/日常/M13 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/日常/M14 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/日常/M21 - 梶浦由記.mp3`
         ],
         '欢快': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/x6x2p3.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8ed8fo.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/layx05.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/7f3pxo.mp3'
-        ],
-        '悲伤': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/i7b95p.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/zg0qo2.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/z9jk4p.mp3'
-        ]
-      },
-      '伽蓝之洞': {
-        '篇章开始': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/i6teji.mp3'],
-        '篇章结束': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/q8im0e.mp3'],
-        '空灵': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/t6xqw9.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/jf9w35.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/y8gpp7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wbc1gi.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6dy0h2.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/uho3ux.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/7f3pxo.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/u334wl.mp3'
+          `${BGM_BASE}/杀人考察前/欢快/II quiet romance (杀人考察(前)) - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/欢快/III rain goes up (杀人考察(前)) - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/欢快/M11 - 梶浦由記.mp3`
         ],
         '沉静': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/d1tkvz.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/jf9w35.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wbc1gi.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/uho3ux.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/fypgm5.mp3'
+          `${BGM_BASE}/杀人考察前/沉静/I something and nothing (杀人考察(前)) - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/沉静/M01 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/沉静/M02 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/沉静/M04 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/沉静/M09 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/沉静/M13 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/沉静/M17 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/沉静/M19 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/沉静/M21 - 梶浦由記.mp3`
         ],
-        '日常': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/d1tkvz.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/jf9w35.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/uho3ux.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/7f3pxo.mp3'
+        '空灵': [
+          `${BGM_BASE}/杀人考察前/空灵/I something and nothing (杀人考察(前)) - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/空灵/II quiet romance (杀人考察(前)) - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/空灵/M01 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/空灵/M02 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/空灵/M09 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/空灵/M10 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/空灵/M17 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/空灵/M18 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/空灵/M19 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察前/空灵/M21 - 梶浦由記.mp3`
         ],
-        '压抑': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/xf4mxe.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6s1kze.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/uabsgq.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6dy0h2.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/fypgm5.mp3'
-        ],
-        '战斗': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/u334wl.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/kjfegw.mp3'
-        ],
-        '欢快': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/7f3pxo.mp3'],
-        '悲伤': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wbc1gi.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6dy0h2.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/d1tkvz.mp3'
-        ]
+        '篇章开始': [],
+        '篇章结束': [`${BGM_BASE}/杀人考察前/篇章结束/君が光に変えて行く.mp3`]
       },
       '痛觉残留': {
-        '篇章开始': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/zxz9q2.mp3'],
-        '篇章结束': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/r8f7iz.mp3'],
-        '空灵': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ceejxx.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/4cmoh8.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/k3mxn0.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/30gr03.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8rvolo.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/pxhih7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/cgwz28.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/jweyis.mp3'
-        ],
-        '沉静': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ceejxx.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6vpds6.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ga8z7b.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/30gr03.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8178fz.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/cgwz28.mp3'
-        ],
-        '日常': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/r4dxoy.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ga8z7b.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/30gr03.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8178fz.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/cgwz28.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/jweyis.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/o81ebu.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/mmsr7b.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/fowc9h.mp3'
-        ],
         '压抑': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ceejxx.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/4cmoh8.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/vwqe5z.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/r4dxoy.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/k3mxn0.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/2ow6rp.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/rc5hc0.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/30gr03.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8rvolo.mp3'
-        ],
-        '战斗': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/2ow6rp.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/pxhih7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/5y4917.mp3'
-        ],
-        '欢快': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/mmsr7b.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/fowc9h.mp3'
+          `${BGM_BASE}/痛觉残留/压抑/M01 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/压抑/M02.mp3`,
+          `${BGM_BASE}/痛觉残留/压抑/M03+04.mp3`,
+          `${BGM_BASE}/痛觉残留/压抑/M06 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/压抑/M07+08 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/压抑/M10+11 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/压抑/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/压抑/M13+14 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/压抑/M15 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/压抑/M17+18 - 梶浦由記.mp3`
         ],
         '悲伤': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6vpds6.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/2ow6rp.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ga8z7b.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8178fz.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8rvolo.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/cgwz28.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/jweyis.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/o81ebu.mp3'
+          `${BGM_BASE}/痛觉残留/悲伤/M09 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/悲伤/M10+11 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/悲伤/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/悲伤/M16 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/悲伤/M17+18 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/悲伤/M21 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/悲伤/M23 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/悲伤/M24 - 梶浦由記.mp3`
+        ],
+        '战斗': [
+          `${BGM_BASE}/痛觉残留/战斗/M10+11 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/战斗/M19+20 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/战斗/M22 - 梶浦由記.mp3`
+        ],
+        '日常': [
+          `${BGM_BASE}/痛觉残留/日常/Ahnen erbe - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/日常/M06 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/日常/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/日常/M15 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/日常/M16 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/日常/M21 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/日常/M23 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/日常/M24 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/日常/M25 - 梶浦由記.mp3`
+        ],
+        '欢快': [
+          `${BGM_BASE}/痛觉残留/欢快/Ahnen erbe - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/欢快/M25 - 梶浦由記.mp3`
+        ],
+        '沉静': [
+          `${BGM_BASE}/痛觉残留/沉静/M01 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/沉静/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/沉静/M15 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/沉静/M16 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/沉静/M21 - 梶浦由記.mp3`
+        ],
+        '空灵': [
+          `${BGM_BASE}/痛觉残留/空灵/M01 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/空灵/M02.mp3`,
+          `${BGM_BASE}/痛觉残留/空灵/M07+08 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/空灵/M09 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/空灵/M15 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/空灵/M17+18 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/空灵/M19+20 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/空灵/M21 - 梶浦由記.mp3`,
+          `${BGM_BASE}/痛觉残留/空灵/M23 - 梶浦由記.mp3`
+        ],
+        '篇章开始': [`${BGM_BASE}/痛觉残留/篇章开始/if I cry (痛覚残留) - 梶浦由記.mp3`],
+        '篇章结束': [`${BGM_BASE}/痛觉残留/篇章结束/傷跡 - Kalafina.mp3`]
+      },
+      '迦蓝之洞': {
+        '压抑': [
+          `${BGM_BASE}/迦蓝之洞/压抑/M03 - 梶浦由記 (1).mp3`,
+          `${BGM_BASE}/迦蓝之洞/压抑/M04 - 梶浦由記 (1).mp3`,
+          `${BGM_BASE}/迦蓝之洞/压抑/M05[Zenhan] - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/压抑/M18 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/压抑/kyoukai-shiki - 梶浦由記.mp3`
+        ],
+        '悲伤': [
+          `${BGM_BASE}/迦蓝之洞/悲伤/M05[Kouhan] - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/悲伤/M10 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/悲伤/M11 - 梶浦由記.mp3`
+        ],
+        '战斗': [
+          `${BGM_BASE}/迦蓝之洞/战斗/M14 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/战斗/M15+16+17 - 梶浦由記.mp3`
+        ],
+        '日常': [
+          `${BGM_BASE}/迦蓝之洞/日常/M05[Kouhan] - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/日常/M07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/日常/M11 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/日常/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/日常/M13 - 梶浦由記.mp3`
+        ],
+        '欢快': [`${BGM_BASE}/迦蓝之洞/欢快/M13 - 梶浦由記.mp3`],
+        '沉静': [
+          `${BGM_BASE}/迦蓝之洞/沉静/M05[Kouhan] - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/沉静/M07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/沉静/M10 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/沉静/M11 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/沉静/M12 - 梶浦由記.mp3`
+        ],
+        '空灵': [
+          `${BGM_BASE}/迦蓝之洞/空灵/M06 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/空灵/M07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/空灵/M08+09 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/空灵/M10 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/空灵/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/空灵/M13 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/空灵/M14 - 梶浦由記.mp3`,
+          `${BGM_BASE}/迦蓝之洞/空灵/kyoukai-shiki - 梶浦由記.mp3`
+        ],
+        '篇章开始': [`${BGM_BASE}/迦蓝之洞/篇章开始/M01+02 - 梶浦由記.mp3`],
+        '篇章结束': [`${BGM_BASE}/迦蓝之洞/篇章结束/ARIA - Kalafina.mp3`]
+      },
+      '矛盾螺旋': {
+        '压抑': [
+          `${BGM_BASE}/矛盾螺旋/压抑/M01.mp3`,
+          `${BGM_BASE}/矛盾螺旋/压抑/M02.mp3`,
+          `${BGM_BASE}/矛盾螺旋/压抑/M03 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/压抑/M10 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/压抑/M11 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/压抑/M13 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/压抑/M15 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/压抑/M18b - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/压抑/M19 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/压抑/M23 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/压抑/M25 - 梶浦由記.mp3`
+        ],
+        '悲伤': [
+          `${BGM_BASE}/矛盾螺旋/悲伤/M02.mp3`,
+          `${BGM_BASE}/矛盾螺旋/悲伤/M05 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/悲伤/M08 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/悲伤/M20 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/悲伤/M21 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/悲伤/M26 - 梶浦由記.mp3`
+        ],
+        '战斗': [
+          `${BGM_BASE}/矛盾螺旋/战斗/M09 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/战斗/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/战斗/M13 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/战斗/M18b - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/战斗/M21 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/战斗/M24 - 梶浦由記.mp3`
+        ],
+        '日常': [
+          `${BGM_BASE}/矛盾螺旋/日常/Extra - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/日常/M04 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/日常/M05 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/日常/M07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/日常/M18a - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/日常/M20 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/日常/Yokoku - 梶浦由記.mp3`
+        ],
+        '欢快': [
+          `${BGM_BASE}/矛盾螺旋/欢快/Extra - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/欢快/M18a - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/欢快/M21 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/欢快/Yokoku - 梶浦由記.mp3`
+        ],
+        '沉静': [
+          `${BGM_BASE}/矛盾螺旋/沉静/M02.mp3`,
+          `${BGM_BASE}/矛盾螺旋/沉静/M04 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/沉静/M05 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/沉静/M07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/沉静/M08 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/沉静/M15 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/沉静/M16+17 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/沉静/M20 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/沉静/M25 - 梶浦由記.mp3`
+        ],
+        '空灵': [
+          `${BGM_BASE}/矛盾螺旋/空灵/Extra - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/空灵/M01.mp3`,
+          `${BGM_BASE}/矛盾螺旋/空灵/M03 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/空灵/M07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/空灵/M10 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/空灵/M11 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/空灵/M15 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/空灵/M16+17 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/空灵/M20 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/空灵/M23 - 梶浦由記.mp3`,
+          `${BGM_BASE}/矛盾螺旋/空灵/M26 - 梶浦由記.mp3`
+        ],
+        '篇章开始': [`${BGM_BASE}/矛盾螺旋/篇章开始/1M01.mp3`],
+        '篇章结束': [`${BGM_BASE}/矛盾螺旋/篇章结束/sprinter.mp3`]
+      },
+      '忘却录音': {
+        '压抑': [
+          `${BGM_BASE}/忘却录音/压抑/M04 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/压抑/M09 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/压抑/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/压抑/M19 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/压抑/M20 - 梶浦由記.mp3`
+        ],
+        '悲伤': [
+          `${BGM_BASE}/忘却录音/悲伤/EX2 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/悲伤/M05 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/悲伤/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/悲伤/M13 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/悲伤/M18 - 梶浦由記.mp3`
+        ],
+        '战斗': [`${BGM_BASE}/忘却录音/战斗/M15+16+17 - 梶浦由記.mp3`],
+        '日常': [
+          `${BGM_BASE}/忘却录音/日常/EX1 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/日常/M02+03 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/日常/M06+07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/日常/M08 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/日常/M11 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/日常/M14 - 梶浦由記.mp3`
+        ],
+        '欢快': [
+          `${BGM_BASE}/忘却录音/欢快/EX1 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/欢快/M02+03 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/欢快/M06+07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/欢快/M08 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/欢快/M14 - 梶浦由記.mp3`
+        ],
+        '沉静': [
+          `${BGM_BASE}/忘却录音/沉静/M05 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/沉静/M06+07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/沉静/M11 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/沉静/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/沉静/M18 - 梶浦由記.mp3`
+        ],
+        '空灵': [
+          `${BGM_BASE}/忘却录音/空灵/EX2 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/空灵/M05 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/空灵/M13 - 梶浦由記.mp3`,
+          `${BGM_BASE}/忘却录音/空灵/M18 - 梶浦由記.mp3`
+        ],
+        '篇章开始': [`${BGM_BASE}/忘却录音/篇章开始/M01 - 梶浦由記.mp3`],
+        '篇章结束': [`${BGM_BASE}/忘却录音/篇章结束/fairytale.mp3`]
+      },
+      '杀人考察后': {
+        '压抑': [
+          `${BGM_BASE}/杀人考察后/压抑/M01.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M02.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M03.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M05b - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M06 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M08 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M09 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M10 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M11 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M14.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M16.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M18.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M20+21.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M35 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/压抑/M36 - 梶浦由記.mp3`
+        ],
+        '悲伤': [
+          `${BGM_BASE}/杀人考察后/悲伤/M02.mp3`,
+          `${BGM_BASE}/杀人考察后/悲伤/M22 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/悲伤/M23+24 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/悲伤/M25a - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/悲伤/M29 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/悲伤/M30 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/悲伤/M31 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/悲伤/M33 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/悲伤/M38+39 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/悲伤/M41+42 - 梶浦由記.mp3`
+        ],
+        '战斗': [
+          `${BGM_BASE}/杀人考察后/战斗/M05b - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/战斗/M11 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/战斗/M12 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/战斗/M18.mp3`,
+          `${BGM_BASE}/杀人考察后/战斗/M26+27+28 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/战斗/M29 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/战斗/M36 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/战斗/M40 - 梶浦由記.mp3`
+        ],
+        '日常': [
+          `${BGM_BASE}/杀人考察后/日常/M02.mp3`,
+          `${BGM_BASE}/杀人考察后/日常/M05a - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/日常/M07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/日常/M17.mp3`,
+          `${BGM_BASE}/杀人考察后/日常/M19.mp3`,
+          `${BGM_BASE}/杀人考察后/日常/M22 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/日常/M31 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/日常/M33 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/日常/M43 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/日常/M44 - 梶浦由記.mp3`
+        ],
+        '欢快': [
+          `${BGM_BASE}/杀人考察后/欢快/M07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/欢快/M34 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/欢快/M38+39 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/欢快/M43 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/欢快/M44 - 梶浦由記.mp3`
+        ],
+        '沉静': [
+          `${BGM_BASE}/杀人考察后/沉静/M03.mp3`,
+          `${BGM_BASE}/杀人考察后/沉静/M04 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/沉静/M05a - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/沉静/M07 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/沉静/M17.mp3`,
+          `${BGM_BASE}/杀人考察后/沉静/M22 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/沉静/M25a - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/沉静/M33 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/沉静/M38+39 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/沉静/M43 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/沉静/M44 - 梶浦由記.mp3`
+        ],
+        '空灵': [
+          `${BGM_BASE}/杀人考察后/空灵/M04 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/空灵/M05a - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/空灵/M05b - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/空灵/M06 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/空灵/M14.mp3`,
+          `${BGM_BASE}/杀人考察后/空灵/M29 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/空灵/M33 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/空灵/M34 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/空灵/M38+39 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/空灵/M41+42 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/空灵/M43 - 梶浦由記.mp3`,
+          `${BGM_BASE}/杀人考察后/空灵/M44 - 梶浦由記.mp3`
+        ],
+        '篇章开始': [`${BGM_BASE}/杀人考察后/篇章开始/M01.mp3`],
+        '篇章结束': [
+          `${BGM_BASE}/杀人考察后/篇章结束/seventh heaven.mp3`,
+          `${BGM_BASE}/杀人考察后/篇章结束/snow falling.mp3`
         ]
       },
       '未来福音': {
-        '篇章开始': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/i1p960.mp3'],
-        '篇章结束': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/pol242.mp3'],
-        '空灵': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/gyfumk.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6du9hr.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/l4y3gi.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/t2rsvp.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/l1mmf7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/xrt08l.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/5h3mo3.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8lwd8k.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/qlzhlh.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wqhgk2.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/re5xfg.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ls9o90.mp3'
-        ],
-        '沉静': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/gyfumk.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/0b705n.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/efbh4g.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/hw1vty.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/9y85iy.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/l1mmf7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/j6dr6z.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/5h3mo3.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8lwd8k.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/qlzhlh.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wqhgk2.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/qs2yzq.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ls9o90.mp3'
-        ],
-        '日常': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/gyfumk.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/0b705n.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/efbh4g.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/hw1vty.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/t2rsvp.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/l1mmf7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/j6dr6z.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/xrt08l.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/dehs62.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8lwd8k.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wqhgk2.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wxgqkz.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/tvscah.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/c33rz3.mp3'
-        ],
         '压抑': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/n1hfzd.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ek8qrk.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/l4y3gi.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/1e1vo7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/u5u4ux.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/2jxuo2.mp3'
+          `${BGM_BASE}/未来福音/压抑/M14.mp3`,
+          `${BGM_BASE}/未来福音/压抑/M18.mp3`,
+          `${BGM_BASE}/未来福音/压抑/M2.mp3`,
+          `${BGM_BASE}/未来福音/压抑/M36.mp3`,
+          `${BGM_BASE}/未来福音/压抑/M5.mp3`,
+          `${BGM_BASE}/未来福音/压抑/M9.mp3`
+        ],
+        '悲伤': [
+          `${BGM_BASE}/未来福音/悲伤/M13.mp3`,
+          `${BGM_BASE}/未来福音/悲伤/M28.mp3`,
+          `${BGM_BASE}/未来福音/悲伤/M31 - 梶浦由記.mp3`,
+          `${BGM_BASE}/未来福音/悲伤/M32.mp3`
         ],
         '战斗': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/6du9hr.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/aqere4.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/m94xvc.mp3'
-        ],
-        '欢快': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/0b705n.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/hw1vty.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/l1mmf7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/j6dr6z.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/dehs62.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wxgqkz.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/tvscah.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/c33rz3.mp3'
-        ],
-        '悲伤': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/9y85iy.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/re5xfg.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/qs2yzq.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/23tm4f.mp3'
-        ]
-      },
-      '俯瞰风景': {
-        '篇章开始': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/44cg30.mp3'],
-        '篇章结束': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/l2aina.mp3'],
-        '空灵': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/o13qsr.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/oqq4n7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ztlaez.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/q45tik.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/el9cz7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/kqxfix.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/mk112l.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/7t6o3u.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/m00ikp.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/387d3f.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/b3m0se.mp3'
-        ],
-        '沉静': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/o13qsr.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ztlaez.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/kqxfix.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/sngxel.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/81vesv.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/m00ikp.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/387d3f.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/b3m0se.mp3'
+          `${BGM_BASE}/未来福音/战斗/M19.mp3`,
+          `${BGM_BASE}/未来福音/战斗/M20.mp3`,
+          `${BGM_BASE}/未来福音/战斗/M7.mp3`
         ],
         '日常': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/sngxel.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/m00ikp.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/387d3f.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/fsmc3h.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ztlaez.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/q45tik.mp3'
-        ],
-        '压抑': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/oqq4n7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ib9mwc.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/n2t05d.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/el9cz7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/c95cth.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/mk112l.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/7t6o3u.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/m00ikp.mp3'
-        ],
-        '战斗': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ib9mwc.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/n2t05d.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/el9cz7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/c95cth.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/5dvehm.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/7t6o3u.mp3'
-        ],
-        '欢快': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ztlaez.mp3'],
-        '悲伤': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/q45tik.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/81vesv.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/m00ikp.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/387d3f.mp3'
-        ]
-      },
-      '矛盾螺旋': {
-        '篇章开始': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/yefwbm.mp3'],
-        '篇章结束': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/qt6sa6.mp3'],
-        '空灵': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/yefwbm.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ymfvsl.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ujcblw.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/lh1vuy.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/yn35js.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ou14vt.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/jbls5i.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/hbha3c.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/euegqa.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/duzn5s.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/x4ifnv.mp3'
-        ],
-        '沉静': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ymfvsl.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/p8yydy.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/xmzsax.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ujcblw.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wml3pl.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ou14vt.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/jbls5i.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/hbha3c.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/sr3yic.mp3'
-        ],
-        '日常': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/p8yydy.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/xmzsax.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ujcblw.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/h2m9wn.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/hbha3c.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/x4ifnv.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/uatii4.mp3'
-        ],
-        '压抑': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/yefwbm.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/pe1ys1.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/xmzsax.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/lh1vuy.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/yn35js.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/fzrs84.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ou14vt.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8j9reo.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/e82qdw.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/euegqa.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/sr3yic.mp3'
-        ],
-        '战斗': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/5r3cvl.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/5t4wn7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/fzrs84.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8j9reo.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/4abjmg.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ejw1tc.mp3'
+          `${BGM_BASE}/未来福音/日常/M11.mp3`,
+          `${BGM_BASE}/未来福音/日常/M15.mp3`,
+          `${BGM_BASE}/未来福音/日常/M17.mp3`,
+          `${BGM_BASE}/未来福音/日常/M21.mp3`,
+          `${BGM_BASE}/未来福音/日常/M23.mp3`,
+          `${BGM_BASE}/未来福音/日常/M25.mp3`,
+          `${BGM_BASE}/未来福音/日常/M27.mp3`,
+          `${BGM_BASE}/未来福音/日常/M3.mp3`,
+          `${BGM_BASE}/未来福音/日常/M30.mp3`,
+          `${BGM_BASE}/未来福音/日常/M35.mp3`,
+          `${BGM_BASE}/未来福音/日常/M37 - 梶浦由記.mp3`,
+          `${BGM_BASE}/未来福音/日常/M4.mp3`,
+          `${BGM_BASE}/未来福音/日常/M6.mp3`,
+          `${BGM_BASE}/未来福音/日常/M8.mp3`
         ],
         '欢快': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/h2m9wn.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/4abjmg.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/x4ifnv.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/uatii4.mp3'
-        ],
-        '悲伤': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ymfvsl.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/jju9pf.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wml3pl.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/hbha3c.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/4abjmg.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/duzn5s.mp3'
-        ]
-      },
-      '忘却录音': {
-        '篇章开始': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/axkssq.mp3'],
-        '篇章结束': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/h4n3o9.mp3'],
-        '空灵': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/xqai4k.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/zz3nc3.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/1b0snx.mp3'
+          `${BGM_BASE}/未来福音/欢快/M15.mp3`,
+          `${BGM_BASE}/未来福音/欢快/M17.mp3`,
+          `${BGM_BASE}/未来福音/欢快/M23.mp3`,
+          `${BGM_BASE}/未来福音/欢快/M30.mp3`,
+          `${BGM_BASE}/未来福音/欢快/M35.mp3`,
+          `${BGM_BASE}/未来福音/欢快/M4.mp3`,
+          `${BGM_BASE}/未来福音/欢快/M8.mp3`
         ],
         '沉静': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/xqai4k.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/zbtzph.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/eacpaq.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ou456k.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/1b0snx.mp3'
-        ],
-        '日常': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/j4j3w4.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/zbtzph.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/l2man6.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/eacpaq.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/0uhjz5.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wibcp3.mp3'
-        ],
-        '压抑': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/sbkxwi.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/0t5lxr.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ou456k.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/pofwzj.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/p36nvw.mp3'
-        ],
-        '战斗': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ddch7p.mp3'],
-        '欢快': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/j4j3w4.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/zbtzph.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/l2man6.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/0uhjz5.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wibcp3.mp3'
-        ],
-        '悲伤': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/xqai4k.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ou456k.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/zz3nc3.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/1b0snx.mp3'
-        ]
-      },
-      '杀人考察后': {
-        '篇章开始': ['https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/5ire7b.mp3'],
-        '篇章结束': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/z5bjvd.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/p2a1dp.mp3'
+          `${BGM_BASE}/未来福音/沉静/M13.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M15.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M17.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M24.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M25.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M26.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M27.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M3.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M31 - 梶浦由記.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M34.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M37 - 梶浦由記.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M4.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M6.mp3`,
+          `${BGM_BASE}/未来福音/沉静/M8.mp3`
         ],
         '空灵': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/fvhxm8.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/rqsx7l.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/m1r002.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/f0b4ts.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/moswt7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ih2yed.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/hw28f0.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ia3jzr.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/7ifl9z.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/2mvcm9.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/vtfzry.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8svtlg.mp3'
+          `${BGM_BASE}/未来福音/空灵/M11.mp3`,
+          `${BGM_BASE}/未来福音/空灵/M15.mp3`,
+          `${BGM_BASE}/未来福音/空灵/M21.mp3`,
+          `${BGM_BASE}/未来福音/空灵/M24.mp3`,
+          `${BGM_BASE}/未来福音/空灵/M25.mp3`,
+          `${BGM_BASE}/未来福音/空灵/M26.mp3`,
+          `${BGM_BASE}/未来福音/空灵/M27.mp3`,
+          `${BGM_BASE}/未来福音/空灵/M28.mp3`,
+          `${BGM_BASE}/未来福音/空灵/M3.mp3`,
+          `${BGM_BASE}/未来福音/空灵/M34.mp3`,
+          `${BGM_BASE}/未来福音/空灵/M7.mp3`,
+          `${BGM_BASE}/未来福音/空灵/M9.mp3`
         ],
-        '沉静': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/apgl9r.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/fvhxm8.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/rqsx7l.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/x8crch.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/m439p4.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/9zzp6f.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/qsj6dm.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/hw28f0.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/7ifl9z.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/vtfzry.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8svtlg.mp3'
-        ],
-        '日常': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8ehmsx.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/fvhxm8.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/rqsx7l.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/x8crch.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/m439p4.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/1egdo9.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/9zzp6f.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/76blh8.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/hw28f0.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/vtfzry.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8svtlg.mp3'
-        ],
-        '压抑': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/5ire7b.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8ehmsx.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/apgl9r.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/f0b4ts.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/pqwrjq.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/3ywgoz.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/fw9va2.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/zwkc8v.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ql1np6.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/moswt7.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/mrkynk.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/jvs1gt.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/wfx6qu.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/4y1clk.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/w15cxl.mp3'
-        ],
-        '战斗': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/m1r002.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/zwkc8v.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ql1np6.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/jvs1gt.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/510tyv.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ih2yed.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/w15cxl.mp3'
-        ],
-        '欢快': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/x8crch.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ia3jzr.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/7ifl9z.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8svtlg.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/vtfzry.mp3'
-        ],
-        '悲伤': [
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/8ehmsx.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/9zzp6f.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/axy621.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/qsj6dm.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/ih2yed.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/t8epcj.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/76blh8.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/hw28f0.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/7ifl9z.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/pcd9wb.mp3',
-          'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/2mvcm9.mp3'
-        ]
+        '篇章开始': [`${BGM_BASE}/未来福音/篇章开始/M1.mp3`],
+        '篇章结束': [`${BGM_BASE}/未来福音/篇章结束/アレルヤ.mp3`]
       }
     };
 
-    /* 兼容“迦蓝之洞”写法 */
-    MUSIC_DATABASE['迦蓝之洞'] = MUSIC_DATABASE['伽蓝之洞'];
+    /* 兼容“迦蓝之洞”与“伽蓝之洞”双向映射 */
+    MUSIC_DATABASE['伽蓝之洞'] = MUSIC_DATABASE['迦蓝之洞'] || MUSIC_DATABASE['伽蓝之洞'];
 
-    /* 默认音频回退 */
-    const DEFAULT_AUDIO_SRC = 'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/音乐/92ihge.mp3';
+    /* 默认音频回退（杀人考察前/日常） */
+    const DEFAULT_AUDIO_SRC = `${BGM_BASE}/杀人考察前/日常/01 - 梶浦由記.mp3`;
 
     /* ========================================================
      * 【角色资产与盲扫探测引擎】
@@ -1966,6 +1969,14 @@
     }
 
     /* 播放音频辅助函数 */
+    function safeAudioSrc(url) {
+      if (!url) return '';
+      try {
+        return encodeURI(decodeURI(url));
+      } catch (e) {
+        return encodeURI(url);
+      }
+    }
     function playAudioSafe() {
       if (!audioElement || !currentPlayingSrc) return;
       audioElement.play().then(() => {
@@ -2018,7 +2029,7 @@
       if (currentPlayingSrc !== targetSrc) {
         currentPlayingSrc = targetSrc;
         if (audioElement) {
-          audioElement.src = targetSrc;
+          audioElement.src = safeAudioSrc(targetSrc);
           $('#player-progress-fill').css('width', '0%');
           if (autoPlay) {
             playAudioSafe();
@@ -2280,7 +2291,7 @@
         audioElement.addEventListener('ended', () => {
           const nextSrc = getMatchedAudioSrc(currentActiveChapter, currentActiveAtmosphere, currentPlayingSrc);
           currentPlayingSrc = nextSrc;
-          audioElement.src = nextSrc;
+          audioElement.src = safeAudioSrc(nextSrc);
           $('#player-progress-fill').css('width', '0%');
           playAudioSafe();
         });
