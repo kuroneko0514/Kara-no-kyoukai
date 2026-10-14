@@ -1857,6 +1857,63 @@
      * ======================================================== */
     const CDN_PORTRAITS_BASE = 'https://testingcf.jsdelivr.net/gh/kuroneko0514/Kara-no-kyoukai@main/立绘';
 
+    /* 角色全名与别名智能映射表 */
+    const CHARACTER_ALIAS_MAP = {
+      // 濑尾静音系列
+      '静音': '濑尾静音',
+      '濑尾': '濑尾静音',
+      '濑尾静音': '濑尾静音',
+      '瀬尾静音': '濑尾静音',
+      '瀬尾': '濑尾静音',
+
+      // 两仪未那系列
+      '未那': '两仪未那',
+      '两仪未那': '两仪未那',
+      '兩儀未那': '两仪未那',
+
+      // 两仪式系列
+      '式': '两仪式',
+      '两仪式': '两仪式',
+      '兩儀式': '两仪式',
+      '两仪织': '两仪式',
+      '织': '两仪式',
+      '兩儀織': '两仪式',
+
+      // 苍崎橙子系列
+      '橙子': '苍崎橙子',
+      '苍崎': '苍崎橙子',
+      '苍崎橙子': '苍崎橙子',
+      '蒼崎橙子': '苍崎橙子',
+
+      // 浅上藤乃系列
+      '藤乃': '浅上藤乃',
+      '浅上': '浅上藤乃',
+      '浅上藤乃': '浅上藤乃',
+      '淺上藤乃': '浅上藤乃',
+
+      // 黑桐鲜花系列
+      '鲜花': '黑桐鲜花',
+      '黑桐': '黑桐鲜花',
+      '黑桐鲜花': '黑桐鲜花',
+      '黒桐鮮花': '黑桐鲜花',
+      '黒桐': '黑桐鲜花'
+    };
+
+    /* 角色名归一化解析函数（支持别名、简称、带符号名自动匹配为全名） */
+    function getCanonicalCharacterName(rawName) {
+      if (!rawName) return '';
+      const trimmed = String(rawName).trim();
+      if (CHARACTER_ALIAS_MAP[trimmed]) {
+        return CHARACTER_ALIAS_MAP[trimmed];
+      }
+      for (const [alias, canonical] of Object.entries(CHARACTER_ALIAS_MAP)) {
+        if (trimmed.includes(alias)) {
+          return canonical;
+        }
+      }
+      return trimmed;
+    }
+
     /* 全局立绘内存缓存池（避免重复盲扫产生冗余网络请求） */
     window._KKNJ_PORTRAIT_CACHE = window._KKNJ_PORTRAIT_CACHE || {};
 
@@ -1872,11 +1929,12 @@
 
     /* 盲扫获取指定角色的所有可用连续立绘 (1.jpg, 2.jpg ...) */
     async function probeCharacterPortraits(charName) {
-      if (window._KKNJ_PORTRAIT_CACHE[charName] && window._KKNJ_PORTRAIT_CACHE[charName].length > 0) {
-        return window._KKNJ_PORTRAIT_CACHE[charName];
+      const canonicalName = getCanonicalCharacterName(charName);
+      if (window._KKNJ_PORTRAIT_CACHE[canonicalName] && window._KKNJ_PORTRAIT_CACHE[canonicalName].length > 0) {
+        return window._KKNJ_PORTRAIT_CACHE[canonicalName];
       }
 
-      const charEncoded = encodeURIComponent(charName);
+      const charEncoded = encodeURIComponent(canonicalName);
       const baseUrl = `${CDN_PORTRAITS_BASE}/${charEncoded}`;
       const validImages = [];
       let index = 1;
@@ -1891,13 +1949,14 @@
         index++;
       }
 
-      window._KKNJ_PORTRAIT_CACHE[charName] = validImages;
+      window._KKNJ_PORTRAIT_CACHE[canonicalName] = validImages;
       return validImages;
     }
 
     /* 同步获取角色头像 URL */
     function getCharacterAvatarUrl(charName) {
-      const charEncoded = encodeURIComponent(charName);
+      const canonicalName = getCanonicalCharacterName(charName);
+      const charEncoded = encodeURIComponent(canonicalName);
       return `${CDN_PORTRAITS_BASE}/${charEncoded}/头像.jpg`;
     }
 
@@ -2092,21 +2151,22 @@
       let htmlBuffer = '';
 
       charEntries.forEach(([charName, charInfo]) => {
+        const canonicalName = getCanonicalCharacterName(charName);
         const favor = _.get(charInfo, '好感度', 0);
         const outfit = _.get(charInfo, '衣着', '未记录');
         const mind = _.get(charInfo, '心声', '无明显波澜');
 
-        /* 获取头像与立绘 */
-        const avatarUrl = getCharacterAvatarUrl(charName);
-        const fallbackInitial = charName.charAt(0);
+        /* 获取头像与立绘 (统一使用规范化全名解析资产) */
+        const avatarUrl = getCharacterAvatarUrl(canonicalName);
+        const fallbackInitial = (canonicalName || charName).charAt(0);
 
         const avatarHtml = `
-          <img src="${avatarUrl}" class="char-avatar-img" alt="${charName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+          <img src="${avatarUrl}" class="char-avatar-img" alt="${canonicalName}" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
           <span class="char-avatar-fallback" style="display:none;">${fallbackInitial}</span>
         `;
 
         /* 生成立绘容器 (支持首屏秒开 + 盲扫异步装配 + 点击随机轮播) */
-        const cachedPortraits = window._KKNJ_PORTRAIT_CACHE[charName];
+        const cachedPortraits = window._KKNJ_PORTRAIT_CACHE[canonicalName];
         let initialImgSrc = '';
         let initialDataJson = '[]';
 
@@ -2115,28 +2175,28 @@
           initialImgSrc = cachedPortraits[randIdx];
           initialDataJson = JSON.stringify(cachedPortraits);
         } else {
-          const charEncoded = encodeURIComponent(charName);
+          const charEncoded = encodeURIComponent(canonicalName);
           initialImgSrc = `${CDN_PORTRAITS_BASE}/${charEncoded}/1.jpg`;
           initialDataJson = JSON.stringify([initialImgSrc]);
         }
 
         const portraitGalleryHtml = `
-          <div class="portrait-gallery-wrap" data-char-name="${charName}" data-portraits='${initialDataJson}' data-current-index="0">
+          <div class="portrait-gallery-wrap" data-char-name="${charName}" data-canonical-name="${canonicalName}" data-portraits='${initialDataJson}' data-current-index="0">
             <div class="portrait-box" title="点击随机切换插图">
-              <img src="${initialImgSrc}" class="portrait-img" alt="${charName}插页" onerror="this.closest('.portrait-box').innerHTML='<div class=\'portrait-empty\'>[ ${charName} · 暂无插页数据 ]</div>';">
+              <img src="${initialImgSrc}" class="portrait-img" alt="${canonicalName}插页" onerror="this.closest('.portrait-box').innerHTML='<div class=\\'portrait-empty\\'>[ ${canonicalName} · 暂无插页数据 ]</div>';">
             </div>
           </div>
         `;
 
         /* 异步盲扫填充完整立绘池并赋能轮播 */
-        probeCharacterPortraits(charName).then((list) => {
+        probeCharacterPortraits(canonicalName).then((list) => {
           if (list && list.length > 0) {
             const wrap = $(`.portrait-gallery-wrap[data-char-name="${charName}"]`);
             if (wrap.length) {
               wrap.attr('data-portraits', JSON.stringify(list));
               const img = wrap.find('.portrait-img');
               if (img.length === 0) {
-                wrap.find('.portrait-box').html(`<img src="${list[0]}" class="portrait-img" alt="${charName}插页">`);
+                wrap.find('.portrait-box').html(`<img src="${list[0]}" class="portrait-img" alt="${canonicalName}插页">`);
               }
             }
           }
@@ -2150,7 +2210,7 @@
               </div>
               <div class="char-basic-info">
                 <div class="char-name-row">
-                  <span class="char-name">${charName}</span>
+                  <span class="char-name">${canonicalName}</span>
                   <span class="char-fav-text">羁绊 ${favor}</span>
                 </div>
               </div>
