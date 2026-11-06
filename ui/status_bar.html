@@ -1891,22 +1891,33 @@
       '浅上藤乃': '浅上藤乃',
       '淺上藤乃': '浅上藤乃',
 
+      // 黑桐干也系列（兄妹共用姓氏，不能把“黑桐”作为单人的别名）
+      '干也': '黑桐干也',
+      '幹也': '黑桐干也',
+      '黑桐干也': '黑桐干也',
+      '黑桐幹也': '黑桐干也',
+      '黒桐干也': '黑桐干也',
+      '黒桐幹也': '黑桐干也',
+
       // 黑桐鲜花系列
       '鲜花': '黑桐鲜花',
-      '黑桐': '黑桐鲜花',
+      '鮮花': '黑桐鲜花',
       '黑桐鲜花': '黑桐鲜花',
-      '黒桐鮮花': '黑桐鲜花',
-      '黒桐': '黑桐鲜花'
+      '黒桐鮮花': '黑桐鲜花'
     };
+
+    /* 包含匹配优先检查长名称，避免简称抢先命中完整姓名 */
+    const CHARACTER_ALIAS_ENTRIES = Object.entries(CHARACTER_ALIAS_MAP)
+      .sort(([left], [right]) => right.length - left.length);
 
     /* 角色名归一化解析函数（支持别名、简称、带符号名自动匹配为全名） */
     function getCanonicalCharacterName(rawName) {
       if (!rawName) return '';
       const trimmed = String(rawName).trim();
-      if (CHARACTER_ALIAS_MAP[trimmed]) {
+      if (Object.prototype.hasOwnProperty.call(CHARACTER_ALIAS_MAP, trimmed)) {
         return CHARACTER_ALIAS_MAP[trimmed];
       }
-      for (const [alias, canonical] of Object.entries(CHARACTER_ALIAS_MAP)) {
+      for (const [alias, canonical] of CHARACTER_ALIAS_ENTRIES) {
         if (trimmed.includes(alias)) {
           return canonical;
         }
